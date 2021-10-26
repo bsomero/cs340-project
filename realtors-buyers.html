@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Strickland Realty</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+  </head>
+  <body>
+    <ul class="menu">
+      <li class="menuItem" style="background-color: black;"><a class="menuItemLink" href="index.html">Home</a></li>
+      <li class="menuItem"><a class="menuItemLink" href="listings.html">Listings</a></li>
+      <li class="menuItem"><a class="menuItemLink" href="realtors.html">Realtors</a></li>
+      <li class="menuItem"><a class="menuItemLink" href="buyers.html">Buyers</a></li>
+      <li class="menuItem"><a class="menuItemLink" href="sellers.html">Sellers</a></li>
+      <li class="menuItem"><a class="menuItemLink" href="realtors-buyers.html">Realtors-Buyers</a></li>
+    </ul>
+    <div>
+      <h1>Realtors-Buyers</h1>
+      <p>This page will allow you to view realtors and buyers who have worked together.</p>
+    </div>
+    <div>
+      <table>
+        <caption>Realtors</caption>
+        <thead>
+          <tr>
+            <th>Realtor</th>
+            <th>Buyer</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td><button type="button">Delete Relationship</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h2>Add a New Realtor-Buyer Relationship</h2>
+      <form>
+        <fieldset>
+          <legend>New Realtor-Buyer Relationship</legend>
+          <p>
+            <label>
+              Realtor First Name:
+              <input type="text" name="realtor_fname_input" size="20" maxlength="100">
+            </label>
+            <label>
+              Realtor Last Name:
+              <input type="text" name="realtor_lname_input" size="20" maxlength="100">
+            </label>
+          </p>
+          <p>
+            <label>
+              Buyer First Name:
+              <input type="text" name="buyer_fname_input" size="20" maxlength="100">
+            </label>
+            <label>
+              Buyer Last Name:
+              <input type="text" name="buyer_lname_input" size="20" maxlength="100">
+            </label>
+          </p>
+          <p>
+            <button type="button">Add Relationship</button>
+          </p>
+        </fieldset>
+      </form>
+    </div>
+  </body>
+</html>
