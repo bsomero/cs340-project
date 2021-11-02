@@ -4,6 +4,10 @@ body{
   font-family: Arial, sans-serif;
 }
 
+.active {
+  background-color: black;
+}
+
 .menu{
   padding-left: 0px;
 }
@@ -11,6 +15,11 @@ body{
 .menuItem{
   display: inline;
   background-color: darkorange;
+  padding: 20px;
+}
+.menuItemactive{
+  display: inline;
+  background-color: black;
   padding: 20px;
 }
 
