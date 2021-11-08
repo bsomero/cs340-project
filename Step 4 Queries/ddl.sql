@@ -3,7 +3,8 @@ CREATE TABLE IF NOT EXISTS Realtors (
     FirstName VARCHAR(255) NOT NULL,
     LastName VARCHAR(255) NOT NULL,
     Email VARCHAR(255) NOT NULL,
-    Phone INT NOT NULL
+    Phone INT NOT NULL,
+    CONSTRAINT Full_Name UNIQUE (FirstName, LastName)
 );
 
 CREATE TABLE IF NOT EXISTS Buyers (
@@ -11,7 +12,8 @@ CREATE TABLE IF NOT EXISTS Buyers (
     FirstName VARCHAR(255) NOT NULL,
     LastName VARCHAR(255) NOT NULL,
     Email VARCHAR(255) NOT NULL,
-    Phone INT NOT NULL
+    Phone INT NOT NULL,
+    CONSTRAINT Full_Name UNIQUE (FirstName, LastName)
 );
 
 CREATE TABLE IF NOT EXISTS Sellers (
