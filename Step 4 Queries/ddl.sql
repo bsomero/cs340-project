@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS Realtors (
     FirstName VARCHAR(255) NOT NULL,
     LastName VARCHAR(255) NOT NULL,
     Email VARCHAR(255) NOT NULL,
-    Phone INT NOT NULL,
+    Phone VARCHAR(10) NOT NULL,
     CONSTRAINT Full_Name UNIQUE (FirstName, LastName)
 );
 
@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS Buyers (
     FirstName VARCHAR(255) NOT NULL,
     LastName VARCHAR(255) NOT NULL,
     Email VARCHAR(255) NOT NULL,
-    Phone INT NOT NULL,
+    Phone VARCHAR(10) NOT NULL,
     CONSTRAINT Full_Name UNIQUE (FirstName, LastName)
 );
 
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS Sellers (
     FirstName VARCHAR(255) NOT NULL,
     LastName VARCHAR(255) NOT NULL,
     Email VARCHAR(255) NOT NULL,
-    Phone INT NOT NULL,
+    Phone VARCHAR(10) NOT NULL,
     RealtorID INT NOT NULL,
     FOREIGN KEY (RealtorID) REFERENCES Realtors(RealtorID)
 );
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS Listings (
     StreetAddress VARCHAR(255) NOT NULL,
     City VARCHAR(255) NOT NULL,
     State VARCHAR(2) NOT NULL,
-    ZipCode VARCHAR(255) NOT NULL,
+    ZipCode INT NOT NULL,
     Description TEXT,
     AnimalsAllowed BOOLEAN NOT NULL,
     BedCount INT NOT NULL,
@@ -60,9 +60,9 @@ CREATE TABLE IF NOT EXISTS RealtorsBuyers (
 
 
 -- insert sample data
-INSERT INTO Realtors (FirstName, LastName, Email, Phone) VALUES ('John', 'Doe', 'john.doe@stricklandrealty.com', 1234567890);
-INSERT INTO Buyers (FirstName, LastName, Email, Phone) VALUES ('Jane', 'Smith', 'jsmith@sample.com', 9876543210);
-INSERT INTO Sellers (FirstName, LastName, Email, Phone, RealtorID) VALUES ('Hank', 'Hill', 'assistantmanager@stricklandpropane.com', 1111111111, 1);
+INSERT INTO Realtors (FirstName, LastName, Email, Phone) VALUES ('John', 'Doe', 'john.doe@stricklandrealty.com', '1234567890');
+INSERT INTO Buyers (FirstName, LastName, Email, Phone) VALUES ('Jane', 'Smith', 'jsmith@sample.com', '9876543210');
+INSERT INTO Sellers (FirstName, LastName, Email, Phone, RealtorID) VALUES ('Hank', 'Hill', 'assistantmanager@stricklandpropane.com', '1111111111', 1);
 INSERT INTO Listings (Price, StreetAddress, City, State, ZipCode, Description, AnimalsAllowed, BedCount, BathCount, SquareFeet, ListingDate, StoryCount, Garage, RentOrSale, RealtorID, BuyerID, SellerID)
-    VALUES (239000, '84 Rainey St', 'Arlen', 'TX', '73104', 'Sample text', 1, 3, 2, 1500, '2021-11-08', 1, 1, 1, 1, 1, 1);
+    VALUES (239000, '84 Rainey St', 'Arlen', 'TX', 73104, 'Sample text', 1, 3, 2, 1500, '2021-11-08', 1, 1, 1, 1, 1, 1);
 INSERT INTO RealtorsBuyers (RealtorID, BuyerID) VALUES (1, 1);
