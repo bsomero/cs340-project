@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS Sellers (
     LastName VARCHAR(255) NOT NULL,
     Email VARCHAR(255) NOT NULL,
     Phone VARCHAR(10) NOT NULL,
-    RealtorID INT NOT NULL,
+    RealtorID INT,
     FOREIGN KEY (RealtorID) REFERENCES Realtors(RealtorID)
 );
 
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS Listings (
     StoryCount INT NOT NULL,
     Garage INT NOT NULL,
     RentOrSale BOOLEAN NOT NULL,
-    RealtorID INT NOT NULL,
+    RealtorID INT,
     FOREIGN KEY (RealtorID) REFERENCES Realtors(RealtorID),
     BuyerID INT,
     FOREIGN KEY (BuyerID) REFERENCES Buyers(BuyerID),

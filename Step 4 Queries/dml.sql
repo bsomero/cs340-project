@@ -6,6 +6,7 @@ SELECT * FROM Sellers
 SELECT * FROM RealtorsBuyers
 
 -- add a listing
+-- colon character : is used to denote variables that will have data from the backend programming language
 INSERT INTO Listings (Price, StreetAddress, City, State, ZipCode, Description, AnimalsAllowed, BedCount, BathCount, SquareFeet, ListingDate, StoryCount, Garage, RentOrSale, RealtorID, BuyerID, SellerID)
     VALUES (:price_input, :address_input, :city_input, :state_input, :zip_input, :description_input, :animals_input, :beds_input, :baths_input, :squarefeet_input, :date_input, :stories_input, :garage_input, :rentsale_input, :realtor_input, :buyer_input, :seller_input)
 
@@ -31,6 +32,8 @@ UPDATE Realtors SET FirstName = :fname_update, LastName = :lname_update, Email =
 -- delete a realtor (also deletes all realtor-buyer relationships associated with the realtor) - how to handle listings and sellers (make nullable or delete?)
 DELETE FROM Realtors WHERE RealtorID = :realtorid_delete
 DELETE FROM RealtorsBuyers WHERE RealtorID = :realtorid_delete
+UPDATE Listings SET RealtorID = NULL WHERE RealtorID = :realtorid_delete
+UPDATE Sellers SET RealtorID = NULL WHERE RealtorID = :realtorid_delete
 
 -- add a buyer
 INSERT INTO Buyers (FirstName, LastName, Email, Phone) VALUES (:fname_input, :lname_input, :email_input, :phone_input)
