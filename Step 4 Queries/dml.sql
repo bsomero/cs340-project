@@ -29,7 +29,7 @@ SELECT * FROM Realtors WHERE RealtorID = :realtorid_update
 -- update a realtor
 UPDATE Realtors SET FirstName = :fname_update, LastName = :lname_update, Email = :email_update, Phone = :phone_update WHERE RealtorID = :realtorid_update
 
--- delete a realtor (also deletes all realtor-buyer relationships associated with the realtor) - how to handle listings and sellers (make nullable or delete?)
+-- delete a realtor (also deletes all realtor-buyer relationships associated with the realtor)
 DELETE FROM Realtors WHERE RealtorID = :realtorid_delete
 DELETE FROM RealtorsBuyers WHERE RealtorID = :realtorid_delete
 UPDATE Listings SET RealtorID = NULL WHERE RealtorID = :realtorid_delete
