@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Strickland Realty</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
+  </head>
+  <body>
+    <ul class="menu">
+      <li class="menuItem"><a class="menuItemLink" href="index">Home</a></li>
+      <li class="menuItem"><a class="menuItemLink" href="listings">Listings</a></li>
+      <li class="menuItem"><a class="menuItemLink" href="realtors">Realtors</a></li>
+      <li class="menuItemactive"><a class="menuItemLink" href="buyers">Buyers</a></li>
+      <li class="menuItem"><a class="menuItemLink" href="sellers">Sellers</a></li>
+      <li class="menuItem"><a class="menuItemLink" href="realtors-buyers">Realtors-Buyers</a></li>
+    </ul>
+    <div>
+      <h1>Buyers</h1>
+      <p>This page will allow you to update buyers.</p>
+    </div>
+    <div>
+      <table>
+        <caption>Buyers</caption>
+        <thead>
+          <tr>
+            {% for key in Buyers[0].keys() %}
+              <th>{{ key }}</th>
+            {% endfor %}
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for Buyer in Buyers %}
+            <tr>
+              {% for key in Buyer.keys() %}
+                <td>{{ Buyer[key] }}</td>
+              {% endfor %}
+              <td><button class="btn2" type="button">Delete Buyer</button></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h2>Add a New Buyer</h2>
+      <form>
+        <fieldset>
+          <legend>New Buyer</legend>
+          <p>
+            <label>
+              First Name:
+              <input type="text" name="fname_input" size="30" maxlength="100">
+            </label>
+            <label>
+              Last Name:
+              <input type="text" name="lname_input" size="30" maxlength="100">
+            </label>
+          </p>
+          <p>
+            <label>
+              Email:
+              <input type="text" name="email_input" size="30" maxlength="100">
+            </label>
+            <label>
+              Phone Number:
+              <input type="text" name="phone_input" size="30" maxlength="100">
+            </label>
+          </p>
+          <p>
+            <button class="btn" type="button">Add Buyer</button>
+          </p>
+        </fieldset>
+      </form>
+    </div>
+    <div>
+      <h2>Update a Buyer</h2>
+      <form>
+        <fieldset>
+          <legend>Update Buyer</legend>
+          <p>
+            <label>
+              Buyer ID:
+              <input type="number" name="id_update" size="5" maxlength="5">
+            </label>
+          </p>
+          <p>
+            <label>
+              First Name:
+              <input type="text" name="fname_update" size="30" maxlength="100">
+            </label>
+            <label>
+              Last Name:
+              <input type="text" name="lname_update" size="30" maxlength="100">
+            </label>
+          </p>
+          <p>
+            <label>
+              Email:
+              <input type="text" name="email_update" size="30" maxlength="100">
+            </label>
+            <label>
+              Phone Number:
+              <input type="text" name="phone_update" size="30" maxlength="100">
+            </label>
+          </p>
+          <p>
+            <button class="btn" type="button">Find Buyer</button>
+            <button class="btn" type="button">Update Buyer</button>
+          </p>
+        </fieldset>
+      </form>
+    </div>
+  </body>
+</html>

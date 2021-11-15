@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Strickland Realty</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
+  </head>
+  <body>
+    <ul class="menu">
+      <li class="menuItem"><a class="menuItemLink" href="index">Home</a></li>
+      <li class="menuItem"><a class="menuItemLink" href="listings">Listings</a></li>
+      <li class="menuItem"><a class="menuItemLink" href="realtors">Realtors</a></li>
+      <li class="menuItem"><a class="menuItemLink" href="buyers">Buyers</a></li>
+      <li class="menuItem"><a class="menuItemLink" href="sellers">Sellers</a></li>
+      <li class="menuItemactive"><a class="menuItemLink" href="realtors-buyers">Realtors-Buyers</a></li>
+    </ul>
+    <div>
+      <h1>Realtors-Buyers</h1>
+      <p>This page will allow you to view realtors and buyers who have worked together.</p>
+    </div>
+    <div>
+      <table>
+        <caption>Realtors</caption>
+        <thead>
+          <tr>
+            {% for key in RealtorsBuyers[0].keys() %}
+              <th>{{ key }}</th>
+            {% endfor %}
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for RealtorBuyer in RealtorsBuyers %}
+            <tr>
+              {% for key in RealtorBuyer.keys() %}
+                <td>{{ RealtorBuyer[key] }}</td>
+              {% endfor %}
+              <td><button class="btn2" type="button">Delete Relationship</button></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h2>Add a New Realtor-Buyer Relationship</h2>
+      <form>
+        <fieldset>
+          <legend>New Realtor-Buyer Relationship</legend>
+          <p>
+            <label>
+              Realtor First Name:
+              <input type="text" name="realtor_fname_input" size="20" maxlength="100">
+            </label>
+            <label>
+              Realtor Last Name:
+              <input type="text" name="realtor_lname_input" size="20" maxlength="100">
+            </label>
+          </p>
+          <p>
+            <label>
+              Buyer First Name:
+              <input type="text" name="buyer_fname_input" size="20" maxlength="100">
+            </label>
+            <label>
+              Buyer Last Name:
+              <input type="text" name="buyer_lname_input" size="20" maxlength="100">
+            </label>
+          </p>
+          <p>
+            <button type="button">Add Relationship</button>
+          </p>
+        </fieldset>
+      </form>
+      <br><br>
+      <form>
+        <fieldset>
+          <legend>Update Realtor-Buyer Relationship</legend>
+          <p>
+            <label>
+              Realtor First Name:
+              <input type="text" name="realtor_fname_input" size="20" maxlength="100">
+            </label>
+            <label>
+              Realtor Last Name:
+              <input type="text" name="realtor_lname_input" size="20" maxlength="100">
+            </label>
+          </p>
+          <p>
+            <label>
+              Buyer First Name:
+              <input type="text" name="buyer_fname_input" size="20" maxlength="100">
+            </label>
+            <label>
+              Buyer Last Name:
+              <input type="text" name="buyer_lname_input" size="20" maxlength="100">
+            </label>
+          </p>
+          <p>
+            <button class="btn" type="button">Find Relationship</button>
+            <button class="btn" type="button">Update Relationship</button>
+          </p>
+        </fieldset>
+      </form>
+    </div>
+  </body>
+</html>
