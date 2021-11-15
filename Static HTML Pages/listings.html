@@ -38,40 +38,42 @@
             <th>Stories</th>
             <th>Garage</th>
             <th>Rent or Sale</th>
-            <th>Realtor</th>
-            <th>Buyer</th>
-            <th>Seller</th>
+            <th>RealtorID</th>
+            <th>BuyerID</th>
+            <th>SellerID</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
+          {% for listing in Listings %}
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>{{listing[0]}}</td>
+            <td>{{listing[1]}}</td>
+            <td>{{listing[2]}}</td>
+            <td>{{listing[3]}}</td>
+            <td>{{listing[4]}}</td>
+            <td>{{listing[5]}}</td>
+            <td>{{listing[6]}}</td>
+            <td>{{listing[7]}}</td>
+            <td>{{listing[8]}}</td>
+            <td>{{listing[9]}}</td>
+            <td>{{listing[10]}}</td>
+            <td>{{listing[11]}}</td>
+            <td>{{listing[12]}}</td>
+            <td>{{listing[13]}}</td>
+            <td>{{listing[14]}}</td>
+            <td>{{listing[15]}}</td>
+            <td>{{listing[16]}}</td>
+            <td>{{listing[17]}}</td>
             <td><button class="btn2" type="button">Delete Listing</button></td>
           </tr>
+          {% endfor %}
         </tbody>
       </table>
     </div>
     <div>
       <h2>Add a New Listing</h2>
-      <form>
+      <form id="addlisting" action="/add_listing" method="post">
         <fieldset>
           <legend>New Listing</legend>
           <p>
@@ -101,7 +103,7 @@
             </label>
             <label>
               Description:
-              <input type="text" name="desription_input" size="50" maxlength="100">
+              <input type="text" name="description_input" size="50" maxlength="100">
             </label>
           </p>
           <p>
@@ -175,7 +177,7 @@
             </label>
           </p>
           <p>
-            <button class="btn" type="button">Add Listing</button>
+            <button class="btn" type="submit">Add Listing</button>
           </p>
         </fieldset>
       </form>
@@ -279,15 +281,15 @@
           </p>
           <p>
             <label>
-              Realtor:
+              RealtorID:
               <input type="text" name="realtor_update" size="20" maxlength="100">
             </label>
             <label>
-              Buyer:
+              BuyerID:
               <input type="text" name="buyer_update" size="20" maxlength="100">
             </label>
             <label>
-              Seller:
+              SellerID:
               <input type="text" name="seller_update" size="20" maxlength="100">
             </label>
           </p>
