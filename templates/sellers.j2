@@ -43,7 +43,7 @@
     </div>
     <div>
       <h2>Add a New Seller</h2>
-      <form>
+      <form id="addseller" action="/sellers" method="post">
         <fieldset>
           <legend>New Seller</legend>
           <p>
@@ -68,16 +68,12 @@
           </p>
           <p>
             <label>
-              Realtor First Name:
-              <input type="text" name="realtor_fname_input" size="20" maxlength="100">
-            </label>
-            <label>
-              Realtor Last Name:
-              <input type="text" name="realtor_lname_input" size="20" maxlength="100">
+              RealtorID:
+              <input type="text" name="realtor_id" size="20" maxlength="100">
             </label>
           </p>
           <p>
-            <button class="btn" type="button">Add Seller</button>
+            <button class="btn" type="submit">Add Seller</button>
           </p>
         </fieldset>
       </form>

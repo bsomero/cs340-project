@@ -42,6 +42,7 @@ def Listings():
         RealtorID = request.form['realtor_input']
         BuyerID = request.form['buyer_input']
         SellerID = request.form['seller_input']
+
         query = "INSERT INTO Listings (Price, StreetAddress, City, State, ZipCode, Description, AnimalsAllowed, BedCount, BathCount, SquareFeet, ListingDate, StoryCount, Garage, RentOrSale, RealtorID, BuyerID, SellerID) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
         data = (Price, StreetAddress, City, State, ZipCode, Description, AnimalsAllowed, BedCount, BathCount, SquareFeet, ListingDate, StoryCount, Garage, RentOrSale, RealtorID, BuyerID, SellerID)
         execute_query(db_connection, query, data)
@@ -53,33 +54,98 @@ def Listings():
         return render_template("listings.j2", Listings=results)
 
 
-@app.route('/realtors')
+@app.route('/realtors', methods=['GET', 'POST'])
 def Realtors():
-    query = "SELECT * FROM Realtors;"
-    cursor = db.execute_query(db_connection=db_connection, query=query)
-    results = cursor.fetchall()
-    return render_template("realtors.j2", Realtors=results)
+    if request.method == 'GET':
+        query = "SELECT * FROM Realtors;"
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+        results = cursor.fetchall()
+        return render_template("realtors.j2", Realtors=results)
+    elif request.method == 'POST':
+        FirstName = request.form['fname_input']
+        LastName = request.form['lname_input']
+        Email = request.form['email_input']
+        Phone = request.form['phone_input']
 
-@app.route('/buyers')
+        query = "INSERT INTO Realtors (FirstName, LastName, Email, Phone) VALUES (%s, %s, %s, %s);"
+        data = (FirstName, LastName, Email, Phone)
+        execute_query(db_connection, query, data)
+
+        query2 = "SELECT * FROM Realtors;"
+        cursor = execute_query(db_connection, query2)
+        results = cursor.fetchall()
+
+        return render_template("realtors.j2", Realtors=results)
+
+@app.route('/buyers', methods=['GET', 'POST'])
 def Buyers():
-    query = "SELECT * FROM Buyers;"
-    cursor = db.execute_query(db_connection=db_connection, query=query)
-    results = cursor.fetchall()
-    return render_template("buyers.j2", Buyers=results)
+    if request.method == 'GET':
+        query = "SELECT * FROM Buyers;"
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+        results = cursor.fetchall()
+        return render_template("buyers.j2", Buyers=results)
+    elif request.method == 'POST':
+        FirstName = request.form['fname_input']
+        LastName = request.form['lname_input']
+        Email = request.form['email_input']
+        Phone = request.form['phone_input']
 
-@app.route('/sellers')
+        query = "INSERT INTO Buyers (FirstName, LastName, Email, Phone) VALUES (%s, %s, %s, %s);"
+        data = (FirstName, LastName, Email, Phone)
+        execute_query(db_connection, query, data)
+
+        query2 = "SELECT * FROM Buyers;"
+        cursor = execute_query(db_connection, query2)
+        results = cursor.fetchall()
+
+        return render_template("buyers.j2", Buyers=results)
+
+@app.route('/sellers', methods=['GET', 'POST'])
 def Sellers():
-    query = "SELECT * FROM Sellers;"
-    cursor = db.execute_query(db_connection=db_connection, query=query)
-    results = cursor.fetchall()
-    return render_template("sellers.j2", Sellers=results)
+    if request.method == 'GET':
+        query = "SELECT * FROM Sellers;"
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+        results = cursor.fetchall()
+        return render_template("sellers.j2", Sellers=results)
 
-@app.route('/realtors-buyers')
+    elif request.method == 'POST':
+        FirstName = request.form['fname_input']
+        LastName = request.form['lname_input']
+        Email = request.form['email_input']
+        Phone = request.form['phone_input']
+        RealtorID = request.form['realtor_id']
+
+        query = "INSERT INTO Sellers (FirstName, LastName, Email, Phone, RealtorID) VALUES (%s, %s, %s, %s, %s);"
+        data = (FirstName, LastName, Email, Phone, RealtorID)
+        execute_query(db_connection, query, data)
+
+        query2 = "SELECT * FROM Sellers;"
+        cursor = execute_query(db_connection, query2)
+        results = cursor.fetchall()
+
+        return render_template("sellers.j2", Sellers=results)
+
+@app.route('/realtors-buyers', methods=['GET', 'POST'])
 def RealtorsBuyers():
-    query = "SELECT * FROM RealtorsBuyers;"
-    cursor = db.execute_query(db_connection=db_connection, query=query)
-    results = cursor.fetchall()
-    return render_template("realtors-buyers.j2", RealtorsBuyers=results)
+    if request.method == 'GET':
+        query = "SELECT * FROM RealtorsBuyers;"
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+        results = cursor.fetchall()
+        return render_template("realtors-buyers.j2", RealtorsBuyers=results)
+
+    elif request.method == 'POST':
+        RealtorID = request.form['realtor_id']
+        BuyerID = request.form['buyer_id']
+
+        query = "INSERT INTO RealtorsBuyers (RealtorID, BuyerID) VALUES (%s, %s);"
+        data = (RealtorID, BuyerID)
+        execute_query(db_connection, query, data)
+
+        query2 = "SELECT * FROM RealtorsBuyers;"
+        cursor = execute_query(db_connection, query2)
+        results = cursor.fetchall()
+
+        return render_template("realtors-buyers.j2", RealtorsBuyers=results)
 
 # Listener
 

@@ -43,31 +43,23 @@
     </div>
     <div>
       <h2>Add a New Realtor-Buyer Relationship</h2>
-      <form>
+      <form id="addrealtorbuyer" action="/realtors-buyers" method="post">
         <fieldset>
           <legend>New Realtor-Buyer Relationship</legend>
           <p>
             <label>
-              Realtor First Name:
-              <input type="text" name="realtor_fname_input" size="20" maxlength="100">
-            </label>
-            <label>
-              Realtor Last Name:
-              <input type="text" name="realtor_lname_input" size="20" maxlength="100">
+              RealtorID:
+              <input type="number" name="realtor_id" size="20" maxlength="100">
             </label>
           </p>
           <p>
             <label>
-              Buyer First Name:
-              <input type="text" name="buyer_fname_input" size="20" maxlength="100">
-            </label>
-            <label>
-              Buyer Last Name:
-              <input type="text" name="buyer_lname_input" size="20" maxlength="100">
+              BuyerID:
+              <input type="number" name="buyer_id" size="20" maxlength="100">
             </label>
           </p>
           <p>
-            <button type="button">Add Relationship</button>
+            <button class="btn" type="submit">Add Relationship</button>
           </p>
         </fieldset>
       </form>
@@ -77,27 +69,19 @@
           <legend>Update Realtor-Buyer Relationship</legend>
           <p>
             <label>
-              Realtor First Name:
-              <input type="text" name="realtor_fname_input" size="20" maxlength="100">
-            </label>
-            <label>
-              Realtor Last Name:
-              <input type="text" name="realtor_lname_input" size="20" maxlength="100">
+              RealtorID:
+              <input type="number" name="realtor_id" size="20" maxlength="100">
             </label>
           </p>
           <p>
             <label>
-              Buyer First Name:
-              <input type="text" name="buyer_fname_input" size="20" maxlength="100">
-            </label>
-            <label>
-              Buyer Last Name:
-              <input type="text" name="buyer_lname_input" size="20" maxlength="100">
+              BuyerID:
+              <input type="number" name="buyer_id" size="20" maxlength="100">
             </label>
           </p>
           <p>
             <button class="btn" type="button">Find Relationship</button>
-            <button class="btn" type="button">Update Relationship</button>
+            <button class="btn" type="submit">Update Relationship</button>
           </p>
         </fieldset>
       </form>
