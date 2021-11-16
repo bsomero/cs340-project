@@ -43,6 +43,13 @@ def Listings():
         BuyerID = request.form['buyer_input']
         SellerID = request.form['seller_input']
 
+        if Garage == "attached":
+            Garage = 0
+        elif Garage == "detached":
+            Garage = 1
+        else:
+            Garage = 2
+
         if RealtorID == "":
             RealtorID = None
         if BuyerID == "":
