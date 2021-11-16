@@ -78,6 +78,7 @@ def Listings():
 
 @app.route('/realtors', methods=['GET', 'POST'])
 def Realtors():
+    db_connection = connect_to_database()
     if request.method == 'GET':
         query = "SELECT * FROM Realtors;"
         cursor = db.execute_query(db_connection=db_connection, query=query)
@@ -101,6 +102,7 @@ def Realtors():
 
 @app.route('/buyers', methods=['GET', 'POST'])
 def Buyers():
+    db_connection = connect_to_database()
     if request.method == 'GET':
         query = "SELECT * FROM Buyers;"
         cursor = db.execute_query(db_connection=db_connection, query=query)
@@ -124,6 +126,7 @@ def Buyers():
 
 @app.route('/sellers', methods=['GET', 'POST'])
 def Sellers():
+    db_connection = connect_to_database()
     if request.method == 'GET':
         query = "SELECT * FROM Sellers;"
         cursor = db.execute_query(db_connection=db_connection, query=query)
@@ -152,6 +155,7 @@ def Sellers():
 
 @app.route('/realtors-buyers', methods=['GET', 'POST'])
 def RealtorsBuyers():
+    db_connection = connect_to_database()
     if request.method == 'GET':
         query = "SELECT * FROM RealtorsBuyers;"
         cursor = db.execute_query(db_connection=db_connection, query=query)
