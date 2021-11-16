@@ -43,6 +43,11 @@ def Listings():
         BuyerID = request.form['buyer_input']
         SellerID = request.form['seller_input']
 
+        if RealtorID == "":
+            RealtorID = None
+        if BuyerID == "":
+            BuyerID = None
+        
         query = "INSERT INTO Listings (Price, StreetAddress, City, State, ZipCode, Description, AnimalsAllowed, BedCount, BathCount, SquareFeet, ListingDate, StoryCount, Garage, RentOrSale, RealtorID, BuyerID, SellerID) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
         data = (Price, StreetAddress, City, State, ZipCode, Description, AnimalsAllowed, BedCount, BathCount, SquareFeet, ListingDate, StoryCount, Garage, RentOrSale, RealtorID, BuyerID, SellerID)
         execute_query(db_connection, query, data)
@@ -115,6 +120,9 @@ def Sellers():
         Phone = request.form['phone_input']
         RealtorID = request.form['realtor_id']
 
+        if RealtorID == "":
+            RealtorID = None
+        
         query = "INSERT INTO Sellers (FirstName, LastName, Email, Phone, RealtorID) VALUES (%s, %s, %s, %s, %s);"
         data = (FirstName, LastName, Email, Phone, RealtorID)
         execute_query(db_connection, query, data)
