@@ -50,6 +50,16 @@ def Listings():
         else:
             Garage = 2
 
+        if AnimalsAllowed == "yes":
+            AnimalsAllowed = 0
+        else:
+            AnimalsAllowed = 1
+
+        if RentOrSale == "rent":
+            RentOrSale = 0
+        else:
+            RentOrSale = 1
+    
         if RealtorID == "":
             RealtorID = None
         if BuyerID == "":
