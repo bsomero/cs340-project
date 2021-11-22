@@ -35,7 +35,9 @@
               {% for key in Buyer.keys() %}
                 <td>{{ Buyer[key] }}</td>
               {% endfor %}
-              <td><button class="btn2" type="button">Delete Buyer</button></td>
+              <form id="deletebuyer" action="/buyers" method="post">
+                <td><button class="btn2" type="submit" name="delete_button" value="{{ Buyer.BuyerID }}">Delete Buyer</button></td>
+              </form>
             </tr>
           {% endfor %}
         </tbody>
@@ -67,14 +69,14 @@
             </label>
           </p>
           <p>
-            <button class="btn" type="submit">Add Buyer</button>
+            <button class="btn" type="submit" name="add_button" value="add_buyer">Add Buyer</button>
           </p>
         </fieldset>
       </form>
     </div>
     <div>
       <h2>Update a Buyer</h2>
-      <form>
+      <form id="updatebuyer" action="/buyers" method="post">
         <fieldset>
           <legend>Update Buyer</legend>
           <p>
@@ -84,28 +86,7 @@
             </label>
           </p>
           <p>
-            <label>
-              First Name:
-              <input type="text" name="fname_update" size="30" maxlength="100" required>
-            </label>
-            <label>
-              Last Name:
-              <input type="text" name="lname_update" size="30" maxlength="100" required>
-            </label>
-          </p>
-          <p>
-            <label>
-              Email:
-              <input type="text" name="email_update" size="30" maxlength="100" required>
-            </label>
-            <label>
-              Phone Number:
-              <input type="text" name="phone_update" size="30" maxlength="100" required>
-            </label>
-          </p>
-          <p>
-            <button class="btn" type="button">Find Buyer</button>
-            <button class="btn" type="button">Update Buyer</button>
+            <button class="btn" type="submit" name="update_button" value="find_buyer">Find Buyer</button>
           </p>
         </fieldset>
       </form>

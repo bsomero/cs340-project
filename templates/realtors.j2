@@ -35,7 +35,9 @@
               {% for key in Realtor.keys() %}
                 <td>{{ Realtor[key] }}</td>
               {% endfor %}
-              <td><button class="btn2" type="button">Delete Realtor</button></td>
+              <form id="deleterealtor" action="/realtors" method="post">
+                <td><button class="btn2" type="submit" name="delete_button" value="{{ Realtor.RealtorID }}">Delete Realtor</button></td>
+              </form>
             </tr>
           {% endfor %}
         </tbody>
@@ -67,14 +69,14 @@
             </label>
           </p>
           <p>
-            <button class="btn" type="submit">Add Realtor</button>
+            <button class="btn" type="submit" name="add_button" value="add_realtor">Add Realtor</button>
           </p>
         </fieldset>
       </form>
     </div>
     <div>
       <h2>Update a Realtor</h2>
-      <form>
+      <form id="updaterealtor" action="/realtors" method="post">
         <fieldset>
           <legend>Update Realtor</legend>
           <p>
@@ -84,28 +86,7 @@
             </label>
           </p>
           <p>
-            <label>
-              First Name:
-              <input type="text" name="fname_update" size="30" maxlength="100" required>
-            </label>
-            <label>
-              Last Name:
-              <input type="text" name="lname_update" size="30" maxlength="100" required>
-            </label>
-          </p>
-          <p>
-            <label>
-              Email:
-              <input type="text" name="email_update" size="30" maxlength="100" required>
-            </label>
-            <label>
-              Phone Number:
-              <input type="text" name="phone_update" size="30" maxlength="100" required>
-            </label>
-          </p>
-          <p>
-            <button class="btn" type="button">Find Realtor</button>
-            <button class="btn" type="button">Update Realtor</button>
+            <button class="btn" type="submit" name="update_button" value="find_realtor">Find Realtor</button>
           </p>
         </fieldset>
       </form>

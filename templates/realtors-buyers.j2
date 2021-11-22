@@ -35,7 +35,11 @@
               {% for key in RealtorBuyer.keys() %}
                 <td>{{ RealtorBuyer[key] }}</td>
               {% endfor %}
-              <td><button class="btn2" type="button">Delete Relationship</button></td>
+              <form id="deleterealtor-buyer" action="/realtors-buyers" method="post">
+                <input type="hidden" name=realtor_id value="{{ RealtorBuyer.RealtorID }}">
+                <input type="hidden" name=buyer_id value="{{ RealtorBuyer.BuyerID }}">
+                <td><button class="btn2" type="submit" name="delete_button" value="">Delete Relationship</button></td>
+              </form>
             </tr>
           {% endfor %}
         </tbody>
@@ -59,12 +63,12 @@
             </label>
           </p>
           <p>
-            <button class="btn" type="submit">Add Relationship</button>
+            <button class="btn" type="submit" name="add_button" value="add_realtorbuyer">Add Relationship</button>
           </p>
         </fieldset>
       </form>
       <br><br>
-      <form>
+      <form id="updaterealtor-buyer" action="/realtors-buyers" method="post">
         <fieldset>
           <legend>Update Realtor-Buyer Relationship</legend>
           <p>
@@ -80,8 +84,7 @@
             </label>
           </p>
           <p>
-            <button class="btn" type="button">Find Relationship</button>
-            <button class="btn" type="submit">Update Relationship</button>
+            <button class="btn" type="submit" name="update_button" value="find_realtor-buyer">Find Relationship</button>
           </p>
         </fieldset>
       </form>

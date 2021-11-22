@@ -35,7 +35,9 @@
               {% for key in Seller.keys() %}
                 <td>{{ Seller[key] }}</td>
               {% endfor %}
-              <td><button class="btn2" type="button">Delete Seller</button></td>
+              <form id="deleteseller" action="/sellers" method="post">
+                <td><button class="btn2" type="submit" name="delete_button" value="{{ Seller.SellerID }}">Delete Seller</button></td>
+              </form>
             </tr>
           {% endfor %}
         </tbody>
@@ -73,14 +75,14 @@
             </label>
           </p>
           <p>
-            <button class="btn" type="submit">Add Seller</button>
+            <button class="btn" type="submit" name="add_button" value="add_seller">Add Seller</button>
           </p>
         </fieldset>
       </form>
     </div>
     <div>
       <h2>Update a Seller</h2>
-      <form>
+      <form id="updateseller" action="/sellers" method="post">
         <fieldset>
           <legend>Update Seller</legend>
           <p>
@@ -90,39 +92,7 @@
             </label>
           </p>
           <p>
-            <label>
-              First Name:
-              <input type="text" name="fname_update" size="30" maxlength="100" required>
-            </label>
-            <label>
-              Last Name:
-              <input type="text" name="lname_update" size="30" maxlength="100" required>
-            </label>
-            
-          </p>
-          <p>
-            <label>
-              Email:
-              <input type="text" name="email_update" size="30" maxlength="100" required>
-            </label>
-            <label>
-              Phone Number:
-              <input type="text" name="phone_update" size="30" maxlength="100" required>
-            </label>
-          </p>
-          <p>
-            <label>
-              Realtor First Name:
-              <input type="text" name="realtor_fname_update" size="20" maxlength="100">
-            </label>
-            <label>
-              Realtor Last Name:
-              <input type="text" name="realtor_lname_update" size="20" maxlength="100">
-            </label>
-          </p>
-          <p>
-            <button class="btn" type="button">Find Seller</button>
-            <button class="btn" type="button">Update Seller</button>
+            <button class="btn" type="submit" name="update_button" value="find_seller">Find Seller</button>
           </p>
         </fieldset>
       </form>

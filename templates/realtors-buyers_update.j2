@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Strickland Realty</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
+  </head>
+  <body>
+    <ul class="menu">
+      <li class="menuItem"><a class="menuItemLink" href="index">Home</a></li>
+      <li class="menuItem"><a class="menuItemLink" href="listings">Listings</a></li>
+      <li class="menuItem"><a class="menuItemLink" href="realtors">Realtors</a></li>
+      <li class="menuItem"><a class="menuItemLink" href="buyers">Buyers</a></li>
+      <li class="menuItem"><a class="menuItemLink" href="sellers">Sellers</a></li>
+      <li class="menuItemactive"><a class="menuItemLink" href="realtors-buyers">Realtors-Buyers</a></li>
+    </ul>
+    <div>
+      <h1>Realtors-Buyers</h1>
+      <p>This page will allow you to update realtors and buyers who have worked together.</p>
+    </div>
+      <form id="updaterealtor-buyer" action="/realtors-buyers" method="post">
+        <fieldset>
+          <legend>Update Realtor-Buyer Relationship</legend>
+          <p>
+            <label>
+              Previous Values:
+            </label>
+          </p>
+          <p>
+            <label>
+              Realtor ID: {{ RealtorBuyer.RealtorID }}
+            </label>
+          </p>
+          <p>
+            <label>
+              Buyer ID: {{ RealtorBuyer.BuyerID }}
+            </label>
+          </p>
+          <input type="hidden" name=old_realtor_id value="{{ RealtorBuyer.RealtorID }}">
+          <input type="hidden" name=old_buyer_id value="{{ RealtorBuyer.BuyerID }}">
+          <p>
+            <label>
+              RealtorID:
+              <input type="number" name="realtor_id" size="20" maxlength="100" value="{{ RealtorBuyer.RealtorID }}" required>
+            </label>
+          </p>
+          <p>
+            <label>
+              BuyerID:
+              <input type="number" name="buyer_id" size="20" maxlength="100" value="{{ RealtorBuyer.BuyerID }}" required>
+            </label>
+          </p>
+          <p>
+            <button class="btn" type="submit" name="update_button" value="update_realtor-buyer">Update Relationship</button>
+          </p>
+        </fieldset>
+      </form>
+    </div>
+  </body>
+</html>

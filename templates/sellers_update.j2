@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Strickland Realty</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
+  </head>
+  <body>
+    <ul class="menu">
+      <li class="menuItem"><a class="menuItemLink" href="index">Home</a></li>
+      <li class="menuItem"><a class="menuItemLink" href="listings">Listings</a></li>
+      <li class="menuItem"><a class="menuItemLink" href="realtors">Realtors</a></li>
+      <li class="menuItem"><a class="menuItemLink" href="buyers">Buyers</a></li>
+      <li class="menuItemactive"><a class="menuItemLink" href="sellers">Sellers</a></li>
+      <li class="menuItem"><a class="menuItemLink" href="realtors-buyers">Realtors-Buyers</a></li>
+    </ul>
+    <div>
+      <h1>Sellers</h1>
+      <p>This page will allow you to update sellers.</p>
+    </div>
+    <div>
+      <h2>Update a Seller</h2>
+      <form id="updateseller" action="/sellers" method="post">
+        <fieldset>
+          <legend>Update Seller</legend>
+          <p>
+            <label>
+              Seller ID: {{ Seller.SellerID }}
+            </label>
+          </p>
+          <p>
+            <label>
+              First Name:
+              <input type="text" name="fname_update" size="30" maxlength="100" value="{{ Seller.FirstName }}" required>
+            </label>
+            <label>
+              Last Name:
+              <input type="text" name="lname_update" size="30" maxlength="100" value="{{ Seller.LastName }}" required>
+            </label>
+          </p>
+          <p>
+            <label>
+              Email:
+              <input type="text" name="email_update" size="30" maxlength="100" value="{{ Seller.Email }}" required>
+            </label>
+            <label>
+              Phone Number:
+              <input type="text" name="phone_update" size="30" maxlength="100" value="{{ Seller.Phone }}" required>
+            </label>
+          </p>
+          <p>
+            <label>
+              Realtor:
+              {% if Seller.RealtorID == None %}
+                <input type="text" name="realtor_update" size="20" maxlength="100" value="">
+              {% else %}
+                <input type="text" name="realtor_update" size="20" maxlength="100" value="{{ Seller.RealtorID }}">
+              {% endif %}
+            </label>
+          </p>
+          <p>
+            <button class="btn" type="submit" name="update_button" value="{{ Seller.SellerID }}">Update Seller</button>
+          </p>
+        </fieldset>
+      </form>
+    </div>
+  </body>
+</html>

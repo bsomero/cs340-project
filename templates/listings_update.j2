@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Strickland Realty Listings</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
+  </head>
+  <body>
+    <ul class="menu">
+      <li class="menuItem"><a class="menuItemLink" href="index">Home</a></li>
+      <li class="menuItemactive"><a class="menuItemLink" href="listings">Listings</a></li>
+      <li class="menuItem"><a class="menuItemLink" href="realtors">Realtors</a></li>
+      <li class="menuItem"><a class="menuItemLink" href="buyers">Buyers</a></li>
+      <li class="menuItem"><a class="menuItemLink" href="sellers">Sellers</a></li>
+      <li class="menuItem"><a class="menuItemLink" href="realtors-buyers">Realtors-Buyers</a></li>
+    </ul>
+    <div>
+      <h1>Listings</h1>
+      <p>This page will allow you to update real estate listings.</p>
+    </div>
+    <div>
+      <h2>Update a Current Listing</h2>
+      <form id="updatelisting" action="/listings" method="post">
+        <fieldset>
+          <legend>Update Listing</legend>
+          <p>
+            <label>
+              Listing ID: {{ Listing.ListingID }}
+            </label>
+          </p>
+          <p>
+            <label>
+              Street Address:
+              <input type="text" name="address_update" size="70" maxlength="100" value="{{ Listing.StreetAddress }}">
+            </label>
+          </p>
+          <p>
+            <label>
+              City:
+              <input type="text" name="city_update" size="30" maxlength="100" value="{{ Listing.City }}">
+            </label>
+            <label>
+              State:
+              <input type="text" name="state_update" size="2" maxlength="2" value="{{ Listing.State }}">
+            </label>
+            <label>
+              ZIP:
+              <input type="number" name="zip_update" size="5" maxlength="5" value="{{ Listing.ZipCode }}">
+            </label>
+          </p>
+          <p>
+            <label>
+              Price:
+              <input type="number" name="price_update" size="50" maxlength="100" value="{{ Listing.Price }}">
+            </label>
+            <label>
+              Description:
+              <input type="text" name="description_update" size="50" maxlength="100" value="{{ Listing.Description }}">
+            </label>
+          </p>
+          <p>
+            Allows animals?
+            {% if Listing.AnimalsAllowed == 1 %}
+              <label>
+                <input type="radio" name="animals_update" value="yes" checked="checked">Yes
+              </label>
+              <label>
+                <input type="radio" name="animals_update" value="no">No
+              </label>
+            {% else %}
+              <label>
+                <input type="radio" name="animals_update" value="yes">Yes
+              </label>
+              <label>
+                <input type="radio" name="animals_update" value="no" checked="checked">No
+              </label>
+            {% endif %}
+          </p>
+          <p>
+            <label>
+              Beds:
+              <input type="number" name="beds_update" size="3" maxlength="3" value="{{ Listing.BedCount }}">
+            </label>
+            <label>
+              Baths:
+              <input type="number" name="baths_update" size="3" maxlength="3" value="{{ Listing.BathCount }}">
+            </label>
+          </p>
+          <p>
+            <label>
+              Sq Feet:
+              <input type="number" name="squarefeet_update" size="6" maxlength="6" value="{{ Listing.SquareFeet }}">
+            </label>
+            <label>
+              List Date (YYYYMMDD):
+              <input type="text" name="date_update" size="10" maxlength="10" value="{{ Listing.ListingDate }}">
+            </label>
+          </p>
+          <p>
+            <label>
+              Number of Stories:
+              <input type="number" name="stories_update" size="2" maxlength="2" value="{{ Listing.StoryCount }}">
+            </label>
+          </p>
+          <p>
+            Garage:
+            {% if Listing.Garage == 1 %}
+              <label>
+                <input type="radio" name="garage_update" value="attached" checked="checked">Attached
+              </label>
+              <label>
+                <input type="radio" name="garage_update" value="attached">Detached
+              </label>
+              <label>
+                <input type="radio" name="garage_update" value="none">None
+              </label>
+            {% elif Listing.Garage == 2 %}
+              <label>
+                <input type="radio" name="garage_update" value="attached">Attached
+              </label>
+              <label>
+                <input type="radio" name="garage_update" value="attached" checked="checked">Detached
+              </label>
+              <label>
+                <input type="radio" name="garage_update" value="none">None
+              </label>
+            {% else %}
+              <label>
+                <input type="radio" name="garage_update" value="attached">Attached
+              </label>
+              <label>
+                <input type="radio" name="garage_update" value="attached">Detached
+              </label>
+              <label>
+                <input type="radio" name="garage_update" value="none" checked="checked">None
+            {% endif %}
+          </p>
+          <p>
+            Rent or Sale?
+            {% if Listing.RentOrSale == 0 %}
+              <label>
+                <input type="radio" name="rentorsale_update" value="rent" checked="checked">Rent
+              </label>
+              <label>
+                <input type="radio" name="rentorsale_update" value="sale">Sale
+              </label>
+            {% else %}
+              <label>
+                <input type="radio" name="rentorsale_update" value="rent">Rent
+              </label>
+              <label>
+                <input type="radio" name="rentorsale_update" value="sale" checked="checked">Sale
+              </label>
+            {% endif %}
+          </p>
+          <p>
+            <label>
+              Realtor:
+              {% if Listing.RealtorID == None %}
+                <input type="text" name="realtor_update" size="20" maxlength="100" value="">
+              {% else %}
+                <input type="text" name="realtor_update" size="20" maxlength="100" value="{{ Listing.RealtorID }}">
+              {% endif %}
+            </label>
+            <label>
+              Buyer:
+              {% if Listing.BuyerID == None %}
+                <input type="text" name="buyer_update" size="20" maxlength="100" value="">
+              {% else %}
+                <input type="text" name="buyer_update" size="20" maxlength="100" value="{{ Listing.BuyerID }}">
+              {% endif %}
+            </label>
+            <label>
+              Seller:
+              <input type="text" name="seller_update" size="20" maxlength="100" value="{{ Listing.SellerID }}">
+            </label>
+          </p>
+          <p>
+            <button class="btn" type="submit" name="update_button" value="{{ Listing.ListingID }}">Update Listing</button>
+          </p>
+        </fieldset>
+      </form>
+    </div>
+  </body>
+</html>
