@@ -26,7 +26,7 @@
             {% for key in Listings[0].keys() %}
               <th>{{ key }}</th>
             {% endfor %}
-            <th></th>
+            <th class="delete-row"></th>
           </tr>
         </thead>
         <tbody>
@@ -36,7 +36,7 @@
                 <td>{{ Listing[key] }}</td>
               {% endfor %}
               <form id="deletelisting" action="/listings" method="post">
-                <td><button class="btn2" type="submit" name="delete_button" value="{{ Listing.ListingID }}">Delete Listing</button></td>
+                <td><button class="btn2 delete-btn" type="submit" name="delete_button" value="{{ Listing.ListingID }}">Delete Listing</button></td>
               </form>
             </tr>
           {% endfor %}

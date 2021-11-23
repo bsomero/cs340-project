@@ -26,7 +26,7 @@
             {% for key in Realtors[0].keys() %}
               <th>{{ key }}</th>
             {% endfor %}
-            <th></th>
+            <th class="delete-row"></th>
           </tr>
         </thead>
         <tbody>
@@ -36,7 +36,7 @@
                 <td>{{ Realtor[key] }}</td>
               {% endfor %}
               <form id="deleterealtor" action="/realtors" method="post">
-                <td><button class="btn2" type="submit" name="delete_button" value="{{ Realtor.RealtorID }}">Delete Realtor</button></td>
+                <td><button class="btn2 delete-btn" type="submit" name="delete_button" value="{{ Realtor.RealtorID }}">Delete Realtor</button></td>
               </form>
             </tr>
           {% endfor %}

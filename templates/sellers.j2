@@ -26,7 +26,7 @@
             {% for key in Sellers[0].keys() %}
               <th>{{ key }}</th>
             {% endfor %}
-            <th></th>
+            <th class="delete-row"></th>
           </tr>
         </thead>
         <tbody>
@@ -92,7 +92,7 @@
             </label>
           </p>
           <p>
-            <button class="btn" type="submit" name="update_button" value="find_seller">Find Seller</button>
+            <button class="btn delete-btn" type="submit" name="update_button" value="find_seller">Find Seller</button>
           </p>
         </fieldset>
       </form>

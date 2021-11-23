@@ -26,7 +26,7 @@
             {% for key in RealtorsBuyers[0].keys() %}
               <th>{{ key }}</th>
             {% endfor %}
-            <th></th>
+            <th class="delete-row"></th>
           </tr>
         </thead>
         <tbody>
@@ -38,7 +38,7 @@
               <form id="deleterealtor-buyer" action="/realtors-buyers" method="post">
                 <input type="hidden" name=realtor_id value="{{ RealtorBuyer.RealtorID }}">
                 <input type="hidden" name=buyer_id value="{{ RealtorBuyer.BuyerID }}">
-                <td><button class="btn2" type="submit" name="delete_button" value="">Delete Relationship</button></td>
+                <td><button class="btn2 delete-btn" type="submit" name="delete_button" value="">Delete Relationship</button></td>
               </form>
             </tr>
           {% endfor %}
