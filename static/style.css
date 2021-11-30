@@ -1,7 +1,9 @@
 body{
   margin-left: 20px;
-  background-color: #f2f2f2;
+  background-color: #35363A;
+  color: white;
   font-family: Arial, sans-serif;
+  overflow-x: hidden;
 }
 
 .btn {
@@ -11,16 +13,22 @@ body{
   margin: 8px 0;
   border: none;
   cursor: pointer;
-  width: 100%;
+  width: 40%;
   border-radius: 5px;
 }
 
-.delete-btn{
-  width: 100px;
+.btn:hover{
+  background: rgb(16, 16, 16);
 }
 
-.delete-row{
-  width: 110px;
+.fa-trash-alt{
+  color: rgb(206, 19, 19);
+  font-size: 20px;
+}
+
+.fa-edit{
+  color: rgb(110, 110, 245);
+  font-size: 20px;
 }
 
 .btn2 {
@@ -33,10 +41,50 @@ body{
   border-radius: 5px;
 }
 
+.container{
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height: 75px;
+}
+ 
+input{
+  padding: 6px;
+  border: none;
+  border-radius: 3px;
+}
+
+select{
+  padding: 6px;
+  border: none;
+  border-radius: 3px;
+}
+
+.container2{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin: 0 20px;
+}
+
+.delete-btn{
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.delete-row{
+  width: 30px;
+}
+
 table {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 100%;
+  margin-right: 50px;
 }
 
 td,th {
@@ -44,9 +92,11 @@ td,th {
   padding: 8px;
 }
 
-tr:nth-child(even){background-color: #f2f2f2;}
+tr:nth-child(even){
+  background-color: #f2f2f2;
+  color: #35363A;
+}
 
-tr:hover {background-color: #ddd;}
 
 th {
   padding-top: 12px;
@@ -67,11 +117,14 @@ th {
 .menuItem{
   display: inline;
   background-color: darkorange;
+  border: 1px solid darkorange;
   padding: 20px;
 }
 .menuItemactive{
   display: inline;
-  background-color: black;
+  background-color: #35363A;
+  box-sizing: border-box;
+  border: 1px solid darkorange;
   padding: 20px;
 }
 
@@ -112,7 +165,7 @@ p{
 }
 
 form{
-  width:50%;
+  width: 100%;
 }
 
 table, th, td{

@@ -3,9 +3,11 @@
   <head>
     <meta charset="UTF-8">
     <title>Strickland Realty</title>
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
   </head>
   <body>
+    <div class="container">
     <ul class="menu">
       <li class="menuItem"><a class="menuItemLink" href="index">Home</a></li>
       <li class="menuItem"><a class="menuItemLink" href="listings">Listings</a></li>
@@ -14,18 +16,19 @@
       <li class="menuItem"><a class="menuItemLink" href="sellers">Sellers</a></li>
       <li class="menuItem"><a class="menuItemLink" href="realtors-buyers">Realtors-Buyers</a></li>
     </ul>
+    </div>
     <div>
       <h1>Realtors</h1>
       <p>This page will allow you to update realtors.</p>
     </div>
     <div>
       <table>
-        <caption>Realtors</caption>
         <thead>
           <tr>
             {% for key in Realtors[0].keys() %}
               <th>{{ key }}</th>
             {% endfor %}
+            <th class="delete-row"></th>
             <th class="delete-row"></th>
           </tr>
         </thead>
@@ -36,7 +39,11 @@
                 <td>{{ Realtor[key] }}</td>
               {% endfor %}
               <form id="deleterealtor" action="/realtors" method="post">
-                <td><button class="btn2 delete-btn" type="submit" name="delete_button" value="{{ Realtor.RealtorID }}">Delete Realtor</button></td>
+                <td><button class="delete-btn" type="submit" name="delete_button" value="{{ Realtor.RealtorID }}"><i class="fas fa-trash-alt"></i></button></td>
+              </form>
+
+              <form id="deleterealtor" action="/realtors" method="post">
+                <td><button class="delete-btn" type="submit" name="edit_button" value="{{ Realtor.RealtorID }}"><i class="far fa-edit"></i></button></td>
               </form>
             </tr>
           {% endfor %}
@@ -45,9 +52,8 @@
     </div>
     <div>
       <h2>Add a New Realtor</h2>
-      <form id="addrealtor" action="/realtors" method="post">
-        <fieldset>
-          <legend>New Realtor</legend>
+      <div class="container2">
+      <form id="addrealtor" action="/realtors" method="post">         
           <p>
             <label>
               First Name:
@@ -71,25 +77,8 @@
           <p>
             <button class="btn" type="submit" name="add_button" value="add_realtor">Add Realtor</button>
           </p>
-        </fieldset>
       </form>
-    </div>
-    <div>
-      <h2>Update a Realtor</h2>
-      <form id="updaterealtor" action="/realtors" method="post">
-        <fieldset>
-          <legend>Update Realtor</legend>
-          <p>
-            <label>
-              Realtor ID:
-              <input type="number" name="id_update" size="5" maxlength="5" required>
-            </label>
-          </p>
-          <p>
-            <button class="btn" type="submit" name="update_button" value="find_realtor">Find Realtor</button>
-          </p>
-        </fieldset>
-      </form>
+      </div>
     </div>
   </body>
 </html>

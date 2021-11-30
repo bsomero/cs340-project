@@ -1,9 +1,10 @@
-from flask import Flask, render_template, json, request
+from flask import Flask, render_template, json, request, redirect
 import os
 import database.db_connector as db
 from database.db_connector import execute_query, connect_to_database
 
 # Configuration
+
 
 app = Flask(__name__)
 db_connection = db.connect_to_database()
@@ -22,7 +23,34 @@ def Listings():
         query = "SELECT * FROM Listings;"
         cursor = execute_query(db_connection, query)
         results = cursor.fetchall()
-        return render_template("listings.j2", Listings=results)
+
+        for result in results:
+            if result["Garage"] == 1:
+                result["Garage"] = "Attached"
+            if result["Garage"] == 2:
+                result["Garage"] = "Detached"
+            if result["Garage"] == 0:
+                result["Garage"] = "None"
+            if result["RentOrSale"] == 0:
+                result["RentOrSale"] = "Rent"
+            if result["RentOrSale"] == 1:
+                result["RentOrSale"] = "Sale"
+            if result["AnimalsAllowed"] == 0:
+                result["AnimalsAllowed"] = "No"
+            if result["AnimalsAllowed"] == 1:
+                result["AnimalsAllowed"] = "Yes"
+        query2 = "SELECT FirstName, RealtorID FROM Realtors"
+        cursor2 = execute_query(db_connection, query2)
+        results2 = cursor2.fetchall()
+
+        query3 = "SELECT FirstName, BuyerID FROM Buyers"
+        cursor3 = execute_query(db_connection, query3)
+        results3 = cursor3.fetchall()
+
+        query4 = "SELECT FirstName, SellerID FROM Sellers"
+        cursor4 = execute_query(db_connection, query4)
+        results4 = cursor4.fetchall()
+        return render_template("listings.j2", context={'Listings':results, 'Realtors':results2, 'Buyers':results3, 'Sellers':results4})
         
     elif request.method == 'POST' and "add_button" in request.form:
         Price = request.form['price_input']
@@ -42,6 +70,7 @@ def Listings():
         RealtorID = request.form['realtor_input']
         BuyerID = request.form['buyer_input']
         SellerID = request.form['seller_input']
+
 
         if Garage == "attached":
             Garage = 1
@@ -69,90 +98,77 @@ def Listings():
         data = (Price, StreetAddress, City, State, ZipCode, Description, AnimalsAllowed, BedCount, BathCount, SquareFeet, ListingDate, StoryCount, Garage, RentOrSale, RealtorID, BuyerID, SellerID)
         execute_query(db_connection, query, data)
 
-        query2 = "SELECT * FROM Listings;"
-        cursor = execute_query(db_connection, query2)
-        results = cursor.fetchall()
-
-        return render_template("listings.j2", Listings=results)
+        return redirect("/listings")
     
     elif request.method == 'POST' and "delete_button" in request.form:
         ListingID = request.form['delete_button']
         query = "DELETE FROM Listings WHERE ListingID = %s;" % ListingID
         execute_query(db_connection, query)
 
-        query2 = "SELECT * FROM Listings;"
-        cursor = execute_query(db_connection, query2)
-        results = cursor.fetchall()
+        return redirect("/listings")
 
-        return render_template("listings.j2", Listings=results)
+    elif request.method == 'POST' and "edit_button" in request.form:
+        ListingID = request.form['edit_button']
 
-    elif request.method == 'POST' and "update_button" in request.form:
-        if request.form['update_button'] == 'find_listing':
-            ListingID = request.form['id_update']
+        query = "SELECT * FROM Listings WHERE ListingID = %s;" % (ListingID)
+        update_result = execute_query(db_connection, query).fetchone()
 
-            query = "SELECT * FROM Listings WHERE ListingID = %s;" % (ListingID)
-            update_result = execute_query(db_connection, query).fetchone()
-
-            if update_result == None:
-                query2 = "SELECT * FROM Listings;"
-                cursor = execute_query(db_connection, query2)
-                results = cursor.fetchall()
-                return render_template("listings.j2", Listings=results)
-            
-            return render_template("listings_update.j2", Listing=update_result)     
-
-        else:
-            ListingID = request.form['update_button']
-            Price = request.form['price_update']
-            StreetAddress = request.form['address_update']
-            City = request.form['city_update']
-            State = request.form['state_update']
-            ZipCode = request.form['zip_update']
-            Description = request.form['description_update']
-            AnimalsAllowed = request.form['animals_update']
-            BedCount = request.form['beds_update']
-            BathCount = request.form['baths_update']
-            SquareFeet = request.form['squarefeet_update']
-            ListingDate = request.form['date_update']
-            StoryCount = request.form['stories_update']
-            Garage = request.form['garage_update']
-            RentOrSale = request.form['rentorsale_update']
-            RealtorID = request.form['realtor_update']
-            BuyerID = request.form['buyer_update']
-            SellerID = request.form['seller_update']
-
-            if Garage == "attached":
-                Garage = 1
-            elif Garage == "detached":
-                Garage = 2
-            else:
-                Garage = 0
-
-            if AnimalsAllowed == "yes":
-                AnimalsAllowed = 1
-            else:
-                AnimalsAllowed = 0
-
-            if RentOrSale == "rent":
-                RentOrSale = 0
-            else:
-                RentOrSale = 1
-        
-            if RealtorID == "":
-                RealtorID = None
-            if BuyerID == "":
-                BuyerID = None
-
-            query = "UPDATE Listings SET Price = %s, StreetAddress = %s, City = %s, State = %s, ZipCode = %s, Description = %s, AnimalsAllowed = %s, BedCount = %s, BathCount = %s, SquareFeet = %s, ListingDate = %s, StoryCount = %s, Garage = %s, RentOrSale = %s, RealtorID = %s, BuyerID = %s, SellerID = %s WHERE ListingID = %s;"
-            data = (Price, StreetAddress, City, State, ZipCode, Description, AnimalsAllowed, BedCount, BathCount, SquareFeet, ListingDate, StoryCount, Garage, RentOrSale, RealtorID, BuyerID, SellerID, ListingID)
-            execute_query(db_connection, query, data)
-
+        if update_result == None:
             query2 = "SELECT * FROM Listings;"
             cursor = execute_query(db_connection, query2)
             results = cursor.fetchall()
-
             return render_template("listings.j2", Listings=results)
+        
+        return render_template("listings_update.j2", Listing=update_result)     
 
+@app.route('/listings-update', methods=['POST'])
+def listings_update():
+    db_connection = connect_to_database()
+    ListingID = request.form['update_button']
+    Price = request.form['price_update']
+    StreetAddress = request.form['address_update']
+    City = request.form['city_update']
+    State = request.form['state_update']
+    ZipCode = request.form['zip_update']
+    Description = request.form['description_update']
+    AnimalsAllowed = request.form['animals_update']
+    BedCount = request.form['beds_update']
+    BathCount = request.form['baths_update']
+    SquareFeet = request.form['squarefeet_update']
+    ListingDate = request.form['date_update']
+    StoryCount = request.form['stories_update']
+    Garage = request.form['garage_update']
+    RentOrSale = request.form['rentorsale_update']
+    RealtorID = request.form['realtor_update']
+    BuyerID = request.form['buyer_update']
+    SellerID = request.form['seller_update']
+
+    if Garage == "attached":
+        Garage = 1
+    elif Garage == "detached":
+        Garage = 2
+    else:
+        Garage = 0
+
+    if AnimalsAllowed == "yes":
+        AnimalsAllowed = 1
+    else:
+        AnimalsAllowed = 0
+
+    if RentOrSale == "rent":
+        RentOrSale = 0
+    else:
+        RentOrSale = 1
+
+    if RealtorID == "":
+        RealtorID = None
+    if BuyerID == "":
+        BuyerID = None
+
+    query = "UPDATE Listings SET Price = %s, StreetAddress = %s, City = %s, State = %s, ZipCode = %s, Description = %s, AnimalsAllowed = %s, BedCount = %s, BathCount = %s, SquareFeet = %s, ListingDate = %s, StoryCount = %s, Garage = %s, RentOrSale = %s, RealtorID = %s, BuyerID = %s, SellerID = %s WHERE ListingID = %s;"
+    data = (Price, StreetAddress, City, State, ZipCode, Description, AnimalsAllowed, BedCount, BathCount, SquareFeet, ListingDate, StoryCount, Garage, RentOrSale, RealtorID, BuyerID, SellerID, ListingID)
+    execute_query(db_connection, query, data)
+    return redirect("./listings")
 
 
 @app.route('/realtors', methods=['GET', 'POST'])
@@ -191,39 +207,35 @@ def Realtors():
 
         return render_template("realtors.j2", Realtors=results)
 
-    elif request.method == 'POST' and "update_button" in request.form:
-        if request.form['update_button'] == 'find_realtor':
-            RealtorID = request.form['id_update']
+    elif request.method == 'POST' and "edit_button" in request.form:
+        RealtorID = request.form['edit_button']
 
-            query = "SELECT * FROM Realtors WHERE RealtorID = %s;" % (RealtorID)
-            update_result = execute_query(db_connection, query).fetchone()
+        query = "SELECT * FROM Realtors WHERE RealtorID = %s;" % (RealtorID)
+        update_result = execute_query(db_connection, query).fetchone()
 
-            if update_result == None:
-                query2 = "SELECT * FROM Realtors;"
-                cursor = execute_query(db_connection, query2)
-                results = cursor.fetchall()
-                return render_template("realtors.j2", Realtors=results)
-            
-            return render_template("realtors_update.j2", Realtor=update_result)
-        
-        else:
-            RealtorID = request.form['update_button']
-            FirstName = request.form['fname_update']
-            LastName = request.form['lname_update']
-            Email = request.form['email_update']
-            Phone = request.form['phone_update']
-
-            query = "UPDATE Realtors SET FirstName = %s, LastName = %s, Email = %s, Phone = %s WHERE RealtorID = %s;"
-            data = (FirstName, LastName, Email, Phone, RealtorID)
-            execute_query(db_connection, query, data)
-
+        if update_result == None:
             query2 = "SELECT * FROM Realtors;"
             cursor = execute_query(db_connection, query2)
             results = cursor.fetchall()
-
             return render_template("realtors.j2", Realtors=results)
+        
+        return render_template("realtors_update.j2", Realtor=update_result)
+        
+@app.route('/realtor-update', methods=['POST'])
+def realtor_update():
+    db_connection = connect_to_database()
+    RealtorID = request.form['update_button']
+    FirstName = request.form['fname_update']
+    LastName = request.form['lname_update']
+    Email = request.form['email_update']
+    Phone = request.form['phone_update']
 
+    query = "UPDATE Realtors SET FirstName = %s, LastName = %s, Email = %s, Phone = %s WHERE RealtorID = %s;"
+    data = (FirstName, LastName, Email, Phone, RealtorID)
+    execute_query(db_connection, query, data)
 
+    return redirect("./realtors")
+    
 
 @app.route('/buyers', methods=['GET', 'POST'])
 def Buyers():
@@ -261,37 +273,34 @@ def Buyers():
 
         return render_template("buyers.j2", Buyers=results)
 
-    elif request.method == 'POST' and "update_button" in request.form:
-        if request.form['update_button'] == 'find_buyer':
-            BuyerID = request.form['id_update']
+    elif request.method == 'POST' and "edit_button" in request.form:
+        BuyerID = request.form['edit_button']
 
-            query = "SELECT * FROM Buyers WHERE BuyerID = %s;" % (BuyerID)
-            update_result = execute_query(db_connection, query).fetchone()
+        query = "SELECT * FROM Buyers WHERE BuyerID = %s;" % (BuyerID)
+        update_result = execute_query(db_connection, query).fetchone()
 
-            if update_result == None:
-                query2 = "SELECT * FROM Buyers;"
-                cursor = execute_query(db_connection, query2)
-                results = cursor.fetchall()
-                return render_template("buyers.j2", Buyers=results)
-            
-            return render_template("buyers_update.j2", Buyer=update_result)
-        
-        else:
-            BuyerID = request.form['update_button']
-            FirstName = request.form['fname_update']
-            LastName = request.form['lname_update']
-            Email = request.form['email_update']
-            Phone = request.form['phone_update']
-
-            query = "UPDATE Buyers SET FirstName = %s, LastName = %s, Email = %s, Phone = %s WHERE BuyerID = %s;"
-            data = (FirstName, LastName, Email, Phone, BuyerID)
-            execute_query(db_connection, query, data)
-
+        if update_result == None:
             query2 = "SELECT * FROM Buyers;"
             cursor = execute_query(db_connection, query2)
             results = cursor.fetchall()
-
             return render_template("buyers.j2", Buyers=results)
+        
+        return render_template("buyers_update.j2", Buyer=update_result)
+
+@app.route('/buyers-update', methods=['POST'])
+def buyers_update():
+    db_connection = connect_to_database()
+    BuyerID = request.form['update_button']
+    FirstName = request.form['fname_update']
+    LastName = request.form['lname_update']
+    Email = request.form['email_update']
+    Phone = request.form['phone_update']
+
+    query = "UPDATE Buyers SET FirstName = %s, LastName = %s, Email = %s, Phone = %s WHERE BuyerID = %s;"
+    data = (FirstName, LastName, Email, Phone, BuyerID)
+    execute_query(db_connection, query, data)
+
+    return redirect("./buyers")
 
 @app.route('/sellers', methods=['GET', 'POST'])
 def Sellers():
@@ -333,42 +342,40 @@ def Sellers():
 
         return render_template("sellers.j2", Sellers=results)
     
-    elif request.method == 'POST' and "update_button" in request.form:
-        if request.form['update_button'] == 'find_seller':
-            SellerID = request.form['id_update']
-
-            query = "SELECT * FROM Sellers WHERE SellerID = %s;" % (SellerID)
-            update_result = execute_query(db_connection, query).fetchone()
-
-            if update_result == None:
-                query2 = "SELECT * FROM Sellers;"
-                cursor = execute_query(db_connection, query2)
-                results = cursor.fetchall()
-                return render_template("sellers.j2", Sellers=results)
-            
-            return render_template("sellers_update.j2", Seller=update_result)
+    elif request.method == 'POST' and "edit_button" in request.form:
         
-        else:
-            SellerID = request.form['update_button']
-            FirstName = request.form['fname_update']
-            LastName = request.form['lname_update']
-            Email = request.form['email_update']
-            Phone = request.form['phone_update']
-            RealtorID = request.form['realtor_update']
+        SellerID = request.form['edit_button']
 
-            if RealtorID == "":
-                RealtorID = None
+        query = "SELECT * FROM Sellers WHERE SellerID = %s;" % (SellerID)
+        update_result = execute_query(db_connection, query).fetchone()
 
-
-            query = "UPDATE Sellers SET FirstName = %s, LastName = %s, Email = %s, Phone = %s, RealtorID = %s WHERE SellerID = %s;"
-            data = (FirstName, LastName, Email, Phone, RealtorID, SellerID)
-            execute_query(db_connection, query, data)
-
+        if update_result == None:
             query2 = "SELECT * FROM Sellers;"
             cursor = execute_query(db_connection, query2)
             results = cursor.fetchall()
+            return render_template("sellers.j2", Sellers=results)
+        
+        return render_template("sellers_update.j2", Seller=update_result)
+           
 
-            return render_template("sellers.j2", Sellers=results)    
+@app.route('/sellers-update', methods=['POST'])
+def sellers_update():
+    db_connection = connect_to_database()
+    SellerID = request.form['update_button']
+    FirstName = request.form['fname_update']
+    LastName = request.form['lname_update']
+    Email = request.form['email_update']
+    Phone = request.form['phone_update']
+    RealtorID = request.form['realtor_update']
+
+    if RealtorID == "":
+        RealtorID = None
+
+    query = "UPDATE Sellers SET FirstName = %s, LastName = %s, Email = %s, Phone = %s, RealtorID = %s WHERE SellerID = %s;"
+    data = (FirstName, LastName, Email, Phone, RealtorID, SellerID)
+    execute_query(db_connection, query, data)
+
+    return redirect("./sellers")
 
 @app.route('/realtors-buyers', methods=['GET', 'POST'])
 def RealtorsBuyers():
@@ -405,43 +412,39 @@ def RealtorsBuyers():
 
         return render_template("realtors-buyers.j2", RealtorsBuyers=results)
     
-    elif request.method == 'POST' and "update_button" in request.form:
-        if request.form['update_button'] == 'find_realtor-buyer':
-            RealtorID = request.form['realtor_id']
-            BuyerID = request.form['buyer_id']
+    elif request.method == 'POST' and "edit_button" in request.form:
+        RealtorID = request.form['realtor_id']
+        BuyerID = request.form['buyer_id']
 
-            query = "SELECT * FROM RealtorsBuyers WHERE RealtorID = %s AND BuyerID = %s;"
-            data = (RealtorID, BuyerID)
-            update_result = execute_query(db_connection, query, data).fetchone()
+        query = "SELECT * FROM RealtorsBuyers WHERE RealtorID = %s AND BuyerID = %s;"
+        data = (RealtorID, BuyerID)
+        update_result = execute_query(db_connection, query, data).fetchone()
 
-            if update_result == None:
-                query2 = "SELECT * FROM RealtorsBuyers;"
-                cursor = execute_query(db_connection, query2)
-                results = cursor.fetchall()
-                return render_template("realtors-buyers.j2", RealtorsBuyers=results)
-            
-            return render_template("realtors-buyers_update.j2", RealtorBuyer=update_result)
-        
-        else:
-            OldRealtor = request.form['old_realtor_id']
-            OldBuyer = request.form['old_buyer_id']
-            RealtorID = request.form['realtor_id']
-            BuyerID = request.form['buyer_id']
-
-            query = "UPDATE RealtorsBuyers SET RealtorID = %s, BuyerID = %s WHERE RealtorID = %s AND BuyerID = %s;"
-            data = (RealtorID, BuyerID, OldRealtor, OldBuyer)
-            execute_query(db_connection, query, data)
-
+        if update_result == None:
             query2 = "SELECT * FROM RealtorsBuyers;"
             cursor = execute_query(db_connection, query2)
             results = cursor.fetchall()
+            return render_template("realtors-buyers.j2", RealtorsBuyers=results)
+        
+        return render_template("realtors-buyers_update.j2", RealtorBuyer=update_result)
+        
+@app.route('/realtors-buyers-update', methods=['POST'])
+def RealtorsBuyersUpdate():
+    db_connection = connect_to_database()
+    OldRealtor = request.form['old_realtor_id']
+    OldBuyer = request.form['old_buyer_id']
+    RealtorID = request.form['realtor_id']
+    BuyerID = request.form['buyer_id']
 
-            return render_template("realtors-buyers.j2", RealtorsBuyers=results)   
-    
+    query = "UPDATE RealtorsBuyers SET RealtorID = %s, BuyerID = %s WHERE RealtorID = %s AND BuyerID = %s;"
+    data = (RealtorID, BuyerID, OldRealtor, OldBuyer)
+    execute_query(db_connection, query, data)
+
+    return redirect("/realtors-buyers") 
 
 
 # Listener
 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 1115))
+    port = int(os.environ.get('PORT', 6981))
     app.run(host='0.0.0.0',port=port, debug=True)

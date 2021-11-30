@@ -3,9 +3,11 @@
   <head>
     <meta charset="UTF-8">
     <title>Strickland Realty</title>
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
   </head>
   <body>
+    <div class="container">
     <ul class="menu">
       <li class="menuItem"><a class="menuItemLink" href="index">Home</a></li>
       <li class="menuItem"><a class="menuItemLink" href="listings">Listings</a></li>
@@ -14,6 +16,7 @@
       <li class="menuItem"><a class="menuItemLink" href="sellers">Sellers</a></li>
       <li class="menuItem"><a class="menuItemLink" href="realtors-buyers">Realtors-Buyers</a></li>
     </ul>
+    </div>
     <div>
       <h1>Buyers</h1>
       <p>This page will allow you to update buyers.</p>
@@ -27,6 +30,7 @@
               <th>{{ key }}</th>
             {% endfor %}
             <th class="delete-row"></th>
+            <th class="delete-row"></th>
           </tr>
         </thead>
         <tbody>
@@ -35,8 +39,13 @@
               {% for key in Buyer.keys() %}
                 <td>{{ Buyer[key] }}</td>
               {% endfor %}
+              
               <form id="deletebuyer" action="/buyers" method="post">
-                <td><button class="btn2 delete-btn" type="submit" name="delete_button" value="{{ Buyer.BuyerID }}">Delete Buyer</button></td>
+                <td><button class="delete-btn" type="submit" name="delete_button" value="{{ Buyer.BuyerID }}"><i class="fas fa-trash-alt"></i></button></td>
+              </form>
+
+              <form id="deletebuyer" action="/buyers" method="post">
+                <td><button class="delete-btn" type="submit" name="edit_button" value="{{ Buyer.BuyerID }}"><i class="far fa-edit"></i></button></td>
               </form>
             </tr>
           {% endfor %}
@@ -45,9 +54,8 @@
     </div>
     <div>
       <h2>Add a New Buyer</h2>
-      <form id="addbuyer" action="/buyers" method="post">
-        <fieldset>
-          <legend>New Buyer</legend>
+      <div class="container2">
+        <form id="addbuyer" action="/buyers" method="post">
           <p>
             <label>
               First Name:
@@ -71,25 +79,8 @@
           <p>
             <button class="btn" type="submit" name="add_button" value="add_buyer">Add Buyer</button>
           </p>
-        </fieldset>
-      </form>
-    </div>
-    <div>
-      <h2>Update a Buyer</h2>
-      <form id="updatebuyer" action="/buyers" method="post">
-        <fieldset>
-          <legend>Update Buyer</legend>
-          <p>
-            <label>
-              Buyer ID:
-              <input type="number" name="id_update" size="5" maxlength="5" required>
-            </label>
-          </p>
-          <p>
-            <button class="btn" type="submit" name="update_button" value="find_buyer">Find Buyer</button>
-          </p>
-        </fieldset>
-      </form>
+        </form>
+      </div>
     </div>
   </body>
 </html>
