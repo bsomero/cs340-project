@@ -23,6 +23,7 @@
     </div>
     <div>
       <table>
+      {% if RealtorsBuyers %}
         <caption>Realtors</caption>
         <thead>
           <tr>
@@ -59,6 +60,9 @@
             </tr>
           {% endfor %}
         </tbody>
+      {% else %}
+        <p>No results found.</p>
+      {% endif %}
       </table>
     </div>
     <div>

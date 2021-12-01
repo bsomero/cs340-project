@@ -22,6 +22,7 @@
     </div>
     <div>
       <table>
+      {% if context['Listings'] %}
         <thead>
           <tr>
             {% for key in context['Listings'][0].keys() %}
@@ -48,7 +49,23 @@
             </tr>
           {% endfor %}
         </tbody>
+      {% else %}
+        <p>No results found.</p>
+      {% endif %}
       </table>
+    </div>
+    <div>
+      <h2>Search Listings</h2>
+      <div class="container2">
+        <form id="searchlistings" action="/listings" method="post">
+          <p>
+            <input type="text" name="search_input" size="30" maxlength="100" required>
+          </p>
+          <p>
+            <button class="btn" type="submit" name="search_button" value="search_listings">Search Listings</button>
+          </p>
+        </form>
+      </div>
     </div>
     <div>
       <h2>Add a New Listing</h2>

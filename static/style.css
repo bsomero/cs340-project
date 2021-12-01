@@ -3,7 +3,7 @@ body{
   background-color: #35363A;
   color: white;
   font-family: Arial, sans-serif;
-  overflow-x: hidden;
+  overflow-x: auto;
 }
 
 .btn {

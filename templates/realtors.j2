@@ -23,6 +23,7 @@
     </div>
     <div>
       <table>
+      {% if Realtors %}
         <thead>
           <tr>
             {% for key in Realtors[0].keys() %}
@@ -48,6 +49,9 @@
             </tr>
           {% endfor %}
         </tbody>
+      {% else %}
+        <p>No results found.</p>
+      {% endif %}
       </table>
     </div>
     <div>

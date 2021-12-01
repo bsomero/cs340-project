@@ -39,6 +39,7 @@ def Listings():
                 result["AnimalsAllowed"] = "No"
             if result["AnimalsAllowed"] == 1:
                 result["AnimalsAllowed"] = "Yes"
+
         query2 = "SELECT FirstName, RealtorID FROM Realtors"
         cursor2 = execute_query(db_connection, query2)
         results2 = cursor2.fetchall()
@@ -119,7 +120,43 @@ def Listings():
             results = cursor.fetchall()
             return render_template("listings.j2", Listings=results)
         
-        return render_template("listings_update.j2", Listing=update_result)     
+        return render_template("listings_update.j2", Listing=update_result)
+
+    elif request.method == 'POST' and "search_button" in request.form:
+        Search = ('%%' + request.form['search_input'] + '%%')
+
+        query = "SELECT * FROM Listings WHERE Price LIKE '%s' OR StreetAddress LIKE '%s' OR City LIKE '%s' OR State LIKE '%s' OR ZipCode LIKE '%s' OR Description LIKE '%s' OR AnimalsAllowed LIKE '%s' OR BedCount LIKE '%s' OR BathCount LIKE '%s' OR SquareFeet LIKE '%s' OR ListingDate LIKE '%s' OR StoryCount LIKE '%s' OR Garage LIKE '%s' OR RentOrSale LIKE '%s' OR RealtorID LIKE '%s' OR BuyerID LIKE '%s' OR SellerID LIKE '%s';" % (Search, Search, Search, Search, Search, Search, Search, Search, Search, Search, Search, Search, Search, Search, Search, Search, Search)
+        cursor = execute_query(db_connection, query)
+        results = cursor.fetchall()
+
+        for result in results:
+            if result["Garage"] == 1:
+                result["Garage"] = "Attached"
+            if result["Garage"] == 2:
+                result["Garage"] = "Detached"
+            if result["Garage"] == 0:
+                result["Garage"] = "None"
+            if result["RentOrSale"] == 0:
+                result["RentOrSale"] = "Rent"
+            if result["RentOrSale"] == 1:
+                result["RentOrSale"] = "Sale"
+            if result["AnimalsAllowed"] == 0:
+                result["AnimalsAllowed"] = "No"
+            if result["AnimalsAllowed"] == 1:
+                result["AnimalsAllowed"] = "Yes"
+
+        query2 = "SELECT FirstName, RealtorID FROM Realtors"
+        cursor2 = execute_query(db_connection, query2)
+        results2 = cursor2.fetchall()
+
+        query3 = "SELECT FirstName, BuyerID FROM Buyers"
+        cursor3 = execute_query(db_connection, query3)
+        results3 = cursor3.fetchall()
+
+        query4 = "SELECT FirstName, SellerID FROM Sellers"
+        cursor4 = execute_query(db_connection, query4)
+        results4 = cursor4.fetchall()
+        return render_template("listings.j2", context={'Listings':results, 'Realtors':results2, 'Buyers':results3, 'Sellers':results4})
 
 @app.route('/listings-update', methods=['POST'])
 def listings_update():
@@ -446,5 +483,5 @@ def RealtorsBuyersUpdate():
 # Listener
 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 6981))
+    port = int(os.environ.get('PORT', 1115))
     app.run(host='0.0.0.0',port=port, debug=True)
