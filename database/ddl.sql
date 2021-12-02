@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS Sellers (
     Phone VARCHAR(10) NOT NULL,
     RealtorID INT,
     FOREIGN KEY (RealtorID) REFERENCES Realtors(RealtorID)
+    ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS Listings (
@@ -43,19 +44,24 @@ CREATE TABLE IF NOT EXISTS Listings (
     Garage INT NOT NULL,
     RentOrSale BOOLEAN NOT NULL,
     RealtorID INT,
-    FOREIGN KEY (RealtorID) REFERENCES Realtors(RealtorID),
+    FOREIGN KEY (RealtorID) REFERENCES Realtors(RealtorID)
+    ON DELETE SET NULL,
     BuyerID INT,
-    FOREIGN KEY (BuyerID) REFERENCES Buyers(BuyerID),
+    FOREIGN KEY (BuyerID) REFERENCES Buyers(BuyerID)
+    ON DELETE SET NULL,
     SellerID INT NOT NULL,
-    FOREIGN KEY (SellerID) REFERENCES Sellers(SellerID),
+    FOREIGN KEY (SellerID) REFERENCES Sellers(SellerID)
+    ON DELETE CASCADE,
     CONSTRAINT full_address UNIQUE (StreetAddress,City,State,ZipCode)
 );
 
 CREATE TABLE IF NOT EXISTS RealtorsBuyers (
     RealtorID INT NOT NULL,
-    FOREIGN KEY (RealtorID) REFERENCES Realtors(RealtorID),
+    FOREIGN KEY (RealtorID) REFERENCES Realtors(RealtorID)
+    ON DELETE CASCADE,
     BuyerID INT NOT NULL,
     FOREIGN KEY (BuyerID) REFERENCES Buyers(BuyerID)
+    ON DELETE CASCADE
 );
 
 
