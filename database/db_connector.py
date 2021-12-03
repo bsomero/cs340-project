@@ -1,3 +1,4 @@
+# Code from flask starter app at https://github.com/osu-cs340-ecampus/flask-starter-app
 import MySQLdb
 import os
 from dotenv import load_dotenv, find_dotenv

@@ -1,3 +1,4 @@
+-- adds Realtors table and attributes to database; RealtorID is a foreign key to the Sellers, Listings, RealtorsBuyers tables
 CREATE TABLE IF NOT EXISTS Realtors (
     RealtorID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     FirstName VARCHAR(255) NOT NULL,
@@ -7,6 +8,7 @@ CREATE TABLE IF NOT EXISTS Realtors (
     CONSTRAINT Full_Name UNIQUE (FirstName, LastName)
 );
 
+-- adds Buyers table and attributes to database; BuyerID is a fk to the Listings and RealtorsBuyers tables
 CREATE TABLE IF NOT EXISTS Buyers (
     BuyerID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     FirstName VARCHAR(255) NOT NULL,
@@ -16,6 +18,7 @@ CREATE TABLE IF NOT EXISTS Buyers (
     CONSTRAINT Full_Name UNIQUE (FirstName, LastName)
 );
 
+-- adds Sellers table and attributes to database; SellerID is a fk to the Listings table, if a realtor is deleted associated seller rows are updated
 CREATE TABLE IF NOT EXISTS Sellers (
     SellerID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     FirstName VARCHAR(255) NOT NULL,
@@ -27,6 +30,7 @@ CREATE TABLE IF NOT EXISTS Sellers (
     ON DELETE SET NULL
 );
 
+-- adds Listings table and attributes to database; if a seller is deleted associated listings are deleted, if a buyer or realtor are deleted associated listings are updated
 CREATE TABLE IF NOT EXISTS Listings (
     ListingID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     Price INT NOT NULL,
@@ -55,6 +59,7 @@ CREATE TABLE IF NOT EXISTS Listings (
     CONSTRAINT full_address UNIQUE (StreetAddress,City,State,ZipCode)
 );
 
+-- add M:M table for Realtors and Buyers; if a realtor or buyer is deleted, all associated entries in the table are deleted
 CREATE TABLE IF NOT EXISTS RealtorsBuyers (
     RealtorID INT NOT NULL,
     FOREIGN KEY (RealtorID) REFERENCES Realtors(RealtorID)
