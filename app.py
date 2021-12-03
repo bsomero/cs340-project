@@ -19,11 +19,14 @@ def root():
 @app.route('/listings', methods=['GET', 'POST'])
 def Listings():
     db_connection = connect_to_database()
+
+    #  Display all listings
     if request.method == 'GET':
         query = "SELECT * FROM Listings;"
         cursor = execute_query(db_connection, query)
         results = cursor.fetchall()
 
+        # Data stored as a number in the database is displayed as a string
         for result in results:
             if result["Garage"] == 1:
                 result["Garage"] = "Attached"
@@ -40,6 +43,7 @@ def Listings():
             if result["AnimalsAllowed"] == 1:
                 result["AnimalsAllowed"] = "Yes"
 
+        # Populate dropdown menus
         query2 = "SELECT FirstName, RealtorID FROM Realtors"
         cursor2 = execute_query(db_connection, query2)
         results2 = cursor2.fetchall()
@@ -53,6 +57,7 @@ def Listings():
         results4 = cursor4.fetchall()
         return render_template("listings.j2", context={'Listings':results, 'Realtors':results2, 'Buyers':results3, 'Sellers':results4})
         
+    # Add a new listing
     elif request.method == 'POST' and "add_button" in request.form:
         Price = request.form['price_input']
         StreetAddress = request.form['address_input']
@@ -72,7 +77,7 @@ def Listings():
         BuyerID = request.form['buyer_input']
         SellerID = request.form['seller_input']
 
-
+        # Convert strings to numbers
         if Garage == "attached":
             Garage = 1
         elif Garage == "detached":
@@ -101,6 +106,7 @@ def Listings():
 
         return redirect("/listings")
     
+    # Delete a listing row
     elif request.method == 'POST' and "delete_button" in request.form:
         ListingID = request.form['delete_button']
         query = "DELETE FROM Listings WHERE ListingID = %s;" % ListingID
@@ -108,6 +114,7 @@ def Listings():
 
         return redirect("/listings")
 
+    # Update a listing row when edit button for that row clicked
     elif request.method == 'POST' and "edit_button" in request.form:
         ListingID = request.form['edit_button']
 
@@ -122,6 +129,7 @@ def Listings():
         
         return render_template("listings_update.j2", Listing=update_result)
 
+    # Search all attributes for a listing and display results
     elif request.method == 'POST' and "search_button" in request.form:
         Search = ('%%' + request.form['search_input'] + '%%')
 
@@ -202,6 +210,7 @@ def listings_update():
     if BuyerID == "":
         BuyerID = None
 
+    # Update a listing row
     query = "UPDATE Listings SET Price = %s, StreetAddress = %s, City = %s, State = %s, ZipCode = %s, Description = %s, AnimalsAllowed = %s, BedCount = %s, BathCount = %s, SquareFeet = %s, ListingDate = %s, StoryCount = %s, Garage = %s, RentOrSale = %s, RealtorID = %s, BuyerID = %s, SellerID = %s WHERE ListingID = %s;"
     data = (Price, StreetAddress, City, State, ZipCode, Description, AnimalsAllowed, BedCount, BathCount, SquareFeet, ListingDate, StoryCount, Garage, RentOrSale, RealtorID, BuyerID, SellerID, ListingID)
     execute_query(db_connection, query, data)
@@ -211,12 +220,15 @@ def listings_update():
 @app.route('/realtors', methods=['GET', 'POST'])
 def Realtors():
     db_connection = connect_to_database()
+
+    # Display all Realtors
     if request.method == 'GET':
         query = "SELECT * FROM Realtors;"
         cursor = db.execute_query(db_connection=db_connection, query=query)
         results = cursor.fetchall()
         return render_template("realtors.j2", Realtors=results)
 
+    # Add a Realtor and display updated table
     elif request.method == 'POST' and "add_button" in request.form:
         FirstName = request.form['fname_input']
         LastName = request.form['lname_input']
@@ -233,6 +245,7 @@ def Realtors():
 
         return render_template("realtors.j2", Realtors=results)
 
+    # Delete a Realtor and display updated table
     elif request.method == 'POST' and "delete_button" in request.form:
         RealtorID = request.form['delete_button']
         query = "DELETE FROM Realtors WHERE RealtorID = %s;" % RealtorID
@@ -244,6 +257,7 @@ def Realtors():
 
         return render_template("realtors.j2", Realtors=results)
 
+    # Update a Realtor
     elif request.method == 'POST' and "edit_button" in request.form:
         RealtorID = request.form['edit_button']
 
@@ -277,12 +291,15 @@ def realtor_update():
 @app.route('/buyers', methods=['GET', 'POST'])
 def Buyers():
     db_connection = connect_to_database()
+
+    # Display all Buyers
     if request.method == 'GET':
         query = "SELECT * FROM Buyers;"
         cursor = db.execute_query(db_connection=db_connection, query=query)
         results = cursor.fetchall()
         return render_template("buyers.j2", Buyers=results)
 
+    # Add a Buyer and display updated table
     elif request.method == 'POST' and "add_button" in request.form:
         FirstName = request.form['fname_input']
         LastName = request.form['lname_input']
@@ -299,6 +316,7 @@ def Buyers():
 
         return render_template("buyers.j2", Buyers=results)
 
+    # Delete a Buyer and display updated table
     elif request.method == 'POST' and "delete_button" in request.form:
         BuyerID = request.form['delete_button']
         query = "DELETE FROM Buyers WHERE BuyerID = %s;" % BuyerID
@@ -310,6 +328,7 @@ def Buyers():
 
         return render_template("buyers.j2", Buyers=results)
 
+    # Update a Buyer
     elif request.method == 'POST' and "edit_button" in request.form:
         BuyerID = request.form['edit_button']
 
@@ -342,12 +361,15 @@ def buyers_update():
 @app.route('/sellers', methods=['GET', 'POST'])
 def Sellers():
     db_connection = connect_to_database()
+
+    # Display all Sellers
     if request.method == 'GET':
         query = "SELECT * FROM Sellers;"
         cursor = db.execute_query(db_connection=db_connection, query=query)
         results = cursor.fetchall()
         return render_template("sellers.j2", Sellers=results)
 
+    # Add a Seller and display updated table
     elif request.method == 'POST' and "add_button" in request.form:
         FirstName = request.form['fname_input']
         LastName = request.form['lname_input']
@@ -355,6 +377,7 @@ def Sellers():
         Phone = request.form['phone_input']
         RealtorID = request.form['realtor_id']
 
+        # RealtorID is nullable
         if RealtorID == "":
             RealtorID = None
         
@@ -368,6 +391,7 @@ def Sellers():
 
         return render_template("sellers.j2", Sellers=results)
     
+    # Delete a Seller and display updated table
     elif request.method == 'POST' and "delete_button" in request.form:
         SellerID = request.form['delete_button']
         query = "DELETE FROM Sellers WHERE SellerID = %s;" % SellerID
@@ -379,6 +403,7 @@ def Sellers():
 
         return render_template("sellers.j2", Sellers=results)
     
+    # Update a Seller if edit button is clicked
     elif request.method == 'POST' and "edit_button" in request.form:
         
         SellerID = request.form['edit_button']
@@ -417,12 +442,15 @@ def sellers_update():
 @app.route('/realtors-buyers', methods=['GET', 'POST'])
 def RealtorsBuyers():
     db_connection = connect_to_database()
+
+    # Display all Realtor-Buyer relationships
     if request.method == 'GET':
         query = "SELECT * FROM RealtorsBuyers;"
         cursor = db.execute_query(db_connection=db_connection, query=query)
         results = cursor.fetchall()
         return render_template("realtors-buyers.j2", RealtorsBuyers=results)
 
+    # Add a Realtor-Buyer relationship and display updated table
     elif request.method == 'POST' and "add_button" in request.form:
         RealtorID = request.form['realtor_id']
         BuyerID = request.form['buyer_id']
@@ -437,6 +465,7 @@ def RealtorsBuyers():
 
         return render_template("realtors-buyers.j2", RealtorsBuyers=results)
     
+    # Delete a Realtor-Buyer relationship and display updated table
     elif request.method == 'POST' and "delete_button" in request.form:
         RealtorID = request.form['realtor_id']
         BuyerID = request.form['buyer_id']
@@ -449,6 +478,7 @@ def RealtorsBuyers():
 
         return render_template("realtors-buyers.j2", RealtorsBuyers=results)
     
+    # Update a Realtor-Buyer relationship if edit button is clicked
     elif request.method == 'POST' and "edit_button" in request.form:
         RealtorID = request.form['realtor_id']
         BuyerID = request.form['buyer_id']
@@ -473,6 +503,7 @@ def RealtorsBuyersUpdate():
     RealtorID = request.form['realtor_id']
     BuyerID = request.form['buyer_id']
 
+    # Will only update row where both RealtorID and BuyerID match
     query = "UPDATE RealtorsBuyers SET RealtorID = %s, BuyerID = %s WHERE RealtorID = %s AND BuyerID = %s;"
     data = (RealtorID, BuyerID, OldRealtor, OldBuyer)
     execute_query(db_connection, query, data)
