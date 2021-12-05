@@ -72,8 +72,24 @@ CREATE TABLE IF NOT EXISTS RealtorsBuyers (
 
 -- insert sample data
 INSERT INTO Realtors (FirstName, LastName, Email, Phone) VALUES ('John', 'Doe', 'john.doe@stricklandrealty.com', '1234567890');
-INSERT INTO Buyers (FirstName, LastName, Email, Phone) VALUES ('Jane', 'Smith', 'jsmith@sample.com', '9876543210');
+INSERT INTO Realtors (FirstName, LastName, Email, Phone) VALUES ('Joe', 'Schmoe', 'joe.schmoe@stricklandrealty.com', '1234567891');
+INSERT INTO Realtors (FirstName, LastName, Email, Phone) VALUES ('Jane', 'Smith', 'jane.smith@stricklandrealty.com', '1234567892');
+
+INSERT INTO Buyers (FirstName, LastName, Email, Phone) VALUES ('Steve', 'Test', 'stest@sample.com', '9876543210');
+INSERT INTO Buyers (FirstName, LastName, Email, Phone) VALUES ('Jim', 'Williams', 'jwilliams@sample.com', '9876543220');
+INSERT INTO Buyers (FirstName, LastName, Email, Phone) VALUES ('First', 'Last', 'flast@sample.com', '9876543230');
+
 INSERT INTO Sellers (FirstName, LastName, Email, Phone, RealtorID) VALUES ('Hank', 'Hill', 'assistantmanager@stricklandpropane.com', '1111111111', 1);
+INSERT INTO Sellers (FirstName, LastName, Email, Phone, RealtorID) VALUES ('Dale', 'Gribble', 'rshackleford@yahoo.com', '2222222222', 1);
+INSERT INTO Sellers (FirstName, LastName, Email, Phone, RealtorID) VALUES ('Bill', 'Dauterive', 'bill.dauterive@us.army.mil', '3333333333', 1);
+
 INSERT INTO Listings (Price, StreetAddress, City, State, ZipCode, Description, AnimalsAllowed, BedCount, BathCount, SquareFeet, ListingDate, StoryCount, Garage, RentOrSale, RealtorID, BuyerID, SellerID)
     VALUES (239000, '84 Rainey St', 'Arlen', 'TX', 73104, 'Sample text', 1, 3, 2, 1500, '2021-11-08', 1, 1, 1, 1, 1, 1);
+INSERT INTO Listings (Price, StreetAddress, City, State, ZipCode, Description, AnimalsAllowed, BedCount, BathCount, SquareFeet, ListingDate, StoryCount, Garage, RentOrSale, RealtorID, BuyerID, SellerID)
+    VALUES (1000, '123 Test St', 'Boise', 'ID', 12345, 'Sample text 2', 0, 2, 1, 1000, '2021-12-01', 1, 0, 0, 2, 2, 2);
+INSERT INTO Listings (Price, StreetAddress, City, State, ZipCode, Description, AnimalsAllowed, BedCount, BathCount, SquareFeet, ListingDate, StoryCount, Garage, RentOrSale, RealtorID, BuyerID, SellerID)
+    VALUES (80000, '1600 Pennsylvania Ave', 'Washington', 'DC', 98765, 'Sample text 3', 1, 5, 4, 4500, '2021-12-04', 2, 2, 1, 3, NULL, 3);
+
 INSERT INTO RealtorsBuyers (RealtorID, BuyerID) VALUES (1, 1);
+INSERT INTO RealtorsBuyers (RealtorID, BuyerID) VALUES (1, 2);
+INSERT INTO RealtorsBuyers (RealtorID, BuyerID) VALUES (3, 3);
