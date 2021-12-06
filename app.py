@@ -226,6 +226,14 @@ def Realtors():
         query = "SELECT * FROM Realtors;"
         cursor = db.execute_query(db_connection=db_connection, query=query)
         results = cursor.fetchall()
+        for result in results:
+            phone = '('
+            phone += result['Phone'][0:3]
+            phone += ') - '
+            phone += result['Phone'][3:6]
+            phone += ' - '
+            phone += result['Phone'][6:10]
+            result['Phone'] = phone
         return render_template("realtors.j2", Realtors=results)
 
     # Add a Realtor and display updated table
@@ -297,6 +305,14 @@ def Buyers():
         query = "SELECT * FROM Buyers;"
         cursor = db.execute_query(db_connection=db_connection, query=query)
         results = cursor.fetchall()
+        for result in results:
+            phone = '('
+            phone += result['Phone'][0:3]
+            phone += ') - '
+            phone += result['Phone'][3:6]
+            phone += ' - '
+            phone += result['Phone'][6:10]
+            result['Phone'] = phone
         return render_template("buyers.j2", Buyers=results)
 
     # Add a Buyer and display updated table
@@ -367,7 +383,20 @@ def Sellers():
         query = "SELECT * FROM Sellers;"
         cursor = db.execute_query(db_connection=db_connection, query=query)
         results = cursor.fetchall()
-        return render_template("sellers.j2", Sellers=results)
+        for result in results:
+            phone = '('
+            phone += result['Phone'][0:3]
+            phone += ') - '
+            phone += result['Phone'][3:6]
+            phone += ' - '
+            phone += result['Phone'][6:10]
+            result['Phone'] = phone
+         # Populate dropdown menus for realtor selection
+        query2 = "SELECT FirstName, RealtorID FROM Realtors"
+        cursor2 = execute_query(db_connection, query2)
+        results2 = cursor2.fetchall()
+        
+        return render_template("sellers.j2", context={'Sellers':results, 'Realtors':results2})
 
     # Add a Seller and display updated table
     elif request.method == 'POST' and "add_button" in request.form:
@@ -375,7 +404,8 @@ def Sellers():
         LastName = request.form['lname_input']
         Email = request.form['email_input']
         Phone = request.form['phone_input']
-        RealtorID = request.form['realtor_id']
+        RealtorID = request.form['realtor_input']
+        
 
         # RealtorID is nullable
         if RealtorID == "":
@@ -385,11 +415,7 @@ def Sellers():
         data = (FirstName, LastName, Email, Phone, RealtorID)
         execute_query(db_connection, query, data)
 
-        query2 = "SELECT * FROM Sellers;"
-        cursor = execute_query(db_connection, query2)
-        results = cursor.fetchall()
-
-        return render_template("sellers.j2", Sellers=results)
+        return redirect("./sellers")
     
     # Delete a Seller and display updated table
     elif request.method == 'POST' and "delete_button" in request.form:
@@ -397,11 +423,7 @@ def Sellers():
         query = "DELETE FROM Sellers WHERE SellerID = %s;" % SellerID
         execute_query(db_connection, query)
 
-        query2 = "SELECT * FROM Sellers;"
-        cursor = execute_query(db_connection, query2)
-        results = cursor.fetchall()
-
-        return render_template("sellers.j2", Sellers=results)
+        return redirect("./sellers")
     
     # Update a Seller if edit button is clicked
     elif request.method == 'POST' and "edit_button" in request.form:
@@ -411,24 +433,40 @@ def Sellers():
         query = "SELECT * FROM Sellers WHERE SellerID = %s;" % (SellerID)
         update_result = execute_query(db_connection, query).fetchone()
 
+          # Populate dropdown menus for realtor selection
+        query3 = "SELECT FirstName, RealtorID FROM Realtors"
+        cursor3 = execute_query(db_connection, query3)
+        results3 = cursor3.fetchall()
+
+
         if update_result == None:
             query2 = "SELECT * FROM Sellers;"
             cursor = execute_query(db_connection, query2)
             results = cursor.fetchall()
-            return render_template("sellers.j2", Sellers=results)
-        
-        return render_template("sellers_update.j2", Seller=update_result)
+            return render_template("sellers_update.j2", context={'Seller':update_result, 'Realtors':results3})
+
+        return render_template("sellers_update.j2", context={'Seller':update_result, 'Realtors':results3})
            
 
 @app.route('/sellers-update', methods=['POST'])
 def sellers_update():
+    print("Sellers-update page")
     db_connection = connect_to_database()
+    print("connected to db")
     SellerID = request.form['update_button']
+    print("SellerID Working")
     FirstName = request.form['fname_update']
+    print("SellerID Working")
     LastName = request.form['lname_update']
+    print("SellerID Working")
     Email = request.form['email_update']
+    print("Email Working")
     Phone = request.form['phone_update']
+    print("Phone Working")
     RealtorID = request.form['realtor_update']
+    print("RealtorID Working")
+
+    print(request.form)
 
     if RealtorID == "":
         RealtorID = None

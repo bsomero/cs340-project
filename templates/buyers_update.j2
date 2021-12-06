@@ -47,7 +47,8 @@
             </label>
             <label>
               Phone Number:
-              <input type="text" name="phone_update" size="30" maxlength="100" value="{{ Buyer.Phone }}" required>
+              <input type="tel" name="phone_update" size="30" maxlength="100" 
+              pattern="[0-9]{3}[0-9]{3}[0-9]{4}" value="{{ Buyer.Phone }}" required>
             </label>
           </p>
           <p>

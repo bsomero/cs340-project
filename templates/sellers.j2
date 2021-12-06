@@ -23,11 +23,11 @@
     </div>
     <div>
       <table>
-      {% if Sellers %}
+      {% if context['Sellers'] %}
         <caption>Sellers</caption>
         <thead>
           <tr>
-            {% for key in Sellers[0].keys() %}
+            {% for key in context['Sellers'][0].keys() %}
               <th>{{ key }}</th>
             {% endfor %}
             <th class="delete-row"></th>
@@ -35,7 +35,7 @@
           </tr>
         </thead>
         <tbody>
-          {% for Seller in Sellers %}
+          {% for Seller in context['Sellers'] %}
             <tr>
               {% for key in Seller.keys() %}
                 <td>{{ Seller[key] }}</td>
@@ -76,14 +76,19 @@
           </label>
           <label>
             Phone Number:
-            <input type="text" name="phone_input" size="30" maxlength="100" required>
+            <input type="tel" name="phone_input" size="30" maxlength="100" 
+              pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required>
           </label>
         </p>
         <p>
-          <label>
-            RealtorID:
-            <input type="text" name="realtor_id" size="20" maxlength="100">
-          </label>
+          <label for="realtor_input">
+                Realtor:
+                <select name="realtor_input" id="realtors">
+                  {% for Realtor in context['Realtors'] %}                    
+                     <option value="{{Realtor['RealtorID']}}">Name: {{Realtor['FirstName']}}, ID: {{Realtor['RealtorID']}}</option>
+                  {% endfor %}
+                </select>
+              </label>
         </p>
         <p>
           <button class="btn" type="submit" name="add_button" value="add_seller">Add Seller</button>
