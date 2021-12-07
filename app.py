@@ -486,7 +486,13 @@ def RealtorsBuyers():
         query = "SELECT * FROM RealtorsBuyers;"
         cursor = db.execute_query(db_connection=db_connection, query=query)
         results = cursor.fetchall()
-        return render_template("realtors-buyers.j2", RealtorsBuyers=results)
+        realtor_query = "SELECT FirstName, RealtorID FROM Realtors"
+        cursor_realtor = db.execute_query(db_connection=db_connection, query=realtor_query)
+        realtors = (cursor_realtor.fetchall())
+        buyer_query = "SELECT FirstName, BuyerID FROM Buyers"
+        cursor_buyer = db.execute_query(db_connection=db_connection, query=buyer_query)
+        buyers = (cursor_buyer.fetchall())
+        return render_template("realtors-buyers.j2", context={'RealtorsBuyers':results, 'Realtors':realtors, 'Buyers':buyers})
 
     # Add a Realtor-Buyer relationship and display updated table
     elif request.method == 'POST' and "add_button" in request.form:
@@ -525,26 +531,42 @@ def RealtorsBuyers():
         data = (RealtorID, BuyerID)
         update_result = execute_query(db_connection, query, data).fetchone()
 
+          # Populate dropdown menus for realtor selection
+        query3 = "SELECT FirstName, RealtorID FROM Realtors"
+        cursor3 = execute_query(db_connection, query3)
+        results3 = cursor3.fetchall()
+
+          # Populate dropdown menus for buyer selection
+        query4 = "SELECT FirstName, BuyerID FROM Buyers"
+        cursor4 = execute_query(db_connection, query4)
+        results4 = cursor4.fetchall()
+
         if update_result == None:
             query2 = "SELECT * FROM RealtorsBuyers;"
             cursor = execute_query(db_connection, query2)
             results = cursor.fetchall()
             return render_template("realtors-buyers.j2", RealtorsBuyers=results)
         
-        return render_template("realtors-buyers_update.j2", RealtorBuyer=update_result)
+        return render_template("realtors-buyers_update.j2", context={'RealtorBuyer':update_result, 'Realtors': results3, "Buyers": results4})
         
 @app.route('/realtors-buyers-update', methods=['POST'])
 def RealtorsBuyersUpdate():
+    print("Hello")
     db_connection = connect_to_database()
     OldRealtor = request.form['old_realtor_id']
+    print("Hello1")
     OldBuyer = request.form['old_buyer_id']
-    RealtorID = request.form['realtor_id']
-    BuyerID = request.form['buyer_id']
+    print("Hello2")
+    RealtorID = request.form['realtor_update']
+    print("Hello3")
+    BuyerID = request.form['buyer_update']
+    print("Hello4")
 
     # Will only update row where both RealtorID and BuyerID match
     query = "UPDATE RealtorsBuyers SET RealtorID = %s, BuyerID = %s WHERE RealtorID = %s AND BuyerID = %s;"
     data = (RealtorID, BuyerID, OldRealtor, OldBuyer)
     execute_query(db_connection, query, data)
+    
 
     return redirect("/realtors-buyers") 
 

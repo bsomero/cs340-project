@@ -30,27 +30,42 @@
           </p>
           <p>
             <label>
-              Realtor ID: {{ RealtorBuyer.RealtorID }}
+              Realtor ID: {{ context['RealtorBuyer'].RealtorID }}
             </label>
           </p>
           <p>
             <label>
-              Buyer ID: {{ RealtorBuyer.BuyerID }}
+              Buyer ID: {{ context['RealtorBuyer'].BuyerID }}
             </label>
           </p>
-          <input type="hidden" name=old_realtor_id value="{{ RealtorBuyer.RealtorID }}">
-          <input type="hidden" name=old_buyer_id value="{{ RealtorBuyer.BuyerID }}">
+          <input type="hidden" name=old_realtor_id value="{{ context['RealtorBuyer'].RealtorID }}">
+          <input type="hidden" name=old_buyer_id value="{{ context['RealtorBuyer'].BuyerID }}">
           <p>
             <label>
-              RealtorID:
-              <input type="number" name="realtor_id" size="20" maxlength="100" value="{{ RealtorBuyer.RealtorID }}" required>
+               Realtor:
+              <select name="realtor_update" id="realtors">
+                  {% for Realtor in context['Realtors'] %}     
+                     {% if context['RealtorBuyer'].RealtorID == Realtor['RealtorID'] %}              
+                     <option selected value="{{Realtor['RealtorID']}}">Name: {{Realtor['FirstName']}}, ID: {{Realtor['RealtorID']}}</option>
+                     {% else %}
+                     <option value="{{Realtor['RealtorID']}}">Name: {{Realtor['FirstName']}}, ID: {{Realtor['RealtorID']}}</option>
+                     {% endif%}
+                  {% endfor %}
+                </select>
             </label>
           </p>
           <p>
             <label>
-              BuyerID:
-              <input type="number" name="buyer_id" size="20" maxlength="100" value="{{ RealtorBuyer.BuyerID }}" required>
-            </label>
+              Buyer:
+              <select name="buyer_update" id="Buyers">
+                  {% for Buyer in context['Buyers'] %}     
+                     {% if context['RealtorBuyer'].BuyerID == Buyer['BuyerID'] %}              
+                     <option selected value="{{Buyer['BuyerID']}}">Name: {{Buyer['FirstName']}}, ID: {{Buyer['BuyerID']}}</option>
+                     {% else %}
+                     <option value="{{Buyer['BuyerID']}}">Name: {{Buyer['FirstName']}}, ID: {{Buyer['BuyerID']}}</option>
+                     {% endif%}
+                  {% endfor %}
+                </select>
           </p>
           <p>
             <button class="btn" type="submit" name="update_button" value="update_realtor-buyer">Update Relationship</button>

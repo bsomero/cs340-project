@@ -23,11 +23,11 @@
     </div>
     <div>
       <table>
-      {% if RealtorsBuyers %}
+      {% if context['RealtorsBuyers'] %}
         <caption>Realtors</caption>
         <thead>
           <tr>
-            {% for key in RealtorsBuyers[0].keys() %}
+            {% for key in context['RealtorsBuyers'][0].keys() %}
               <th>{{ key }}</th>
             {% endfor %}
             <th class="delete-row"></th>
@@ -35,16 +35,12 @@
           </tr>
         </thead>
         <tbody>
-          {% for RealtorBuyer in RealtorsBuyers %}
+          {% for RealtorBuyer in context['RealtorsBuyers'] %}
             <tr>
               {% for key in RealtorBuyer.keys() %}
                 <td>{{ RealtorBuyer[key] }}</td>
               {% endfor %}
-              {# <form id="deleterealtor-buyer" action="/realtors-buyers" method="post">
-                <input type="hidden" name=realtor_id value="{{ RealtorBuyer.RealtorID }}">
-                <input type="hidden" name=buyer_id value="{{ RealtorBuyer.BuyerID }}">
-                <td><button class="btn2 delete-btn" type="submit" name="delete_button" value="">Delete Relationship</button></td>
-              </form> #}
+  
 
               <form id="deleterealtor-buyer" action="/realtors-buyers" method="post">
                 <input type="hidden" name=realtor_id value="{{ RealtorBuyer.RealtorID }}">
@@ -70,15 +66,23 @@
       <div class="container2">
       <form id="addrealtorbuyer" action="/realtors-buyers" method="post">
           <p>
-            <label>
-              RealtorID:
-              <input type="number" name="realtor_id" size="20" maxlength="100" required>
+            <label for="realtor_input">
+                Realtor:
+                <select name="realtor_id" id="realtors">
+                  {% for Realtor in context['Buyers'] %}                    
+                     <option value="{{Realtor['RealtorID']}}">Name: {{Realtor['FirstName']}}, ID: {{Realtor['RealtorID']}}</option>
+                  {% endfor %}
+                </select>
             </label>
           </p>
           <p>
-            <label>
-              BuyerID:
-              <input type="number" name="buyer_id" size="20" maxlength="100" required>
+            <label for="buyer_input">
+                Buyer:
+                <select name="buyer_id" id="buyers">
+                  {% for Buyer in context['Buyers'] %}                    
+                     <option value="{{Buyer['BuyerID']}}">Name: {{Buyer['FirstName']}}, ID: {{Buyer['RealtorID']}}</option>
+                  {% endfor %}
+                </select>
             </label>
           </p>
           <p>
