@@ -80,7 +80,7 @@
                 Buyer:
                 <select name="buyer_id" id="buyers">
                   {% for Buyer in context['Buyers'] %}                    
-                     <option value="{{Buyer['BuyerID']}}">Name: {{Buyer['FirstName']}}, ID: {{Buyer['RealtorID']}}</option>
+                     <option value="{{Buyer['BuyerID']}}">Name: {{Buyer['FirstName']}}, ID: {{Buyer['BuyerID']}}</option>
                   {% endfor %}
                 </select>
             </label>
