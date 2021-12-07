@@ -69,7 +69,7 @@
             <label for="realtor_input">
                 Realtor:
                 <select name="realtor_id" id="realtors">
-                  {% for Realtor in context['Buyers'] %}                    
+                  {% for Realtor in context['Realtors'] %}                    
                      <option value="{{Realtor['RealtorID']}}">Name: {{Realtor['FirstName']}}, ID: {{Realtor['RealtorID']}}</option>
                   {% endfor %}
                 </select>
